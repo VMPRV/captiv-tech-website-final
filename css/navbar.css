@@ -551,46 +551,82 @@
 /* Responsive Breakpoints */
 @media (max-width: 1040px) {
   .nav-menu {
-    display: none;
+    display: none !important;
   }
   .hamburger-btn {
-    display: flex;
+    display: inline-flex !important;
   }
   .site-header {
-    height: 72px;
-  }
-  .nav-btn-contact {
-    padding: 8px 16px;
-    font-size: 0.88rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .site-header {
-    height: 64px;
-  }
-  .site-header.scrolled {
-    height: 58px;
-  }
-  .nav-container {
-    padding: 0 16px;
-  }
-  .nav-brand {
-    padding-right: 0;
-  }
-  .nav-logo-img {
-    height: 34px;
-    max-width: 150px;
+    height: 70px;
   }
   .nav-actions {
     gap: 10px;
   }
   .nav-btn-contact {
-    display: none; /* Hide top contact CTA on mobile, drawer and page CTA provide clear actions */
+    display: inline-flex !important;
+    padding: 8px 16px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    height: 60px;
+  }
+  .site-header.scrolled {
+    height: 56px;
+  }
+  .nav-container {
+    padding: 0 14px;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .nav-brand {
+    padding-right: 0;
+    margin-right: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .nav-logo-img {
+    height: 28px;
+    width: auto;
+    max-width: 120px;
+  }
+  .nav-actions {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .nav-btn-contact {
+    display: inline-flex !important;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    height: 36px;
+    border-radius: var(--radius-xs);
+    white-space: nowrap;
+    letter-spacing: 0;
+    flex-shrink: 0;
+    box-shadow: none;
+  }
+  .nav-btn-contact svg {
+    display: none !important; /* Hide arrow on mobile so button fits neatly */
   }
   .hamburger-btn {
-    width: 40px;
-    height: 40px;
+    display: inline-flex !important;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--radius-xs);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   .hamburger-btn svg {
     width: 20px;
@@ -621,6 +657,28 @@
     margin-top: 12px;
     font-size: 0.8rem;
     gap: 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-container {
+    padding: 0 10px;
+  }
+  .nav-logo-img {
+    height: 25px;
+    max-width: 105px;
+  }
+  .nav-actions {
+    gap: 6px;
+  }
+  .nav-btn-contact {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    height: 34px;
+  }
+  .hamburger-btn {
+    width: 34px;
+    height: 34px;
   }
 }
 
