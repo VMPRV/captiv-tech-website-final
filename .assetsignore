@@ -1,0 +1,11 @@
+_worker.js
+node_modules/**
+node_modules/
+.git/**
+.github/**
+wrangler.toml
+package.json
+package-lock.json
+README.md
+functions/**
+

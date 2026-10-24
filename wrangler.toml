@@ -1,7 +1,9 @@
 name = "captiv-corporate-website"
-compatibility_date = "2024-01-01"
-pages_build_output_dir = "."
+main = "_worker.js"
+compatibility_date = "2024-09-23"
 
-[site]
-bucket = "."
-
+[assets]
+directory = "."
+binding = "ASSETS"
+html_handling = "auto-trailing-slash"
+not_found_handling = "single-page-application"

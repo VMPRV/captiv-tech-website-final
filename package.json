@@ -6,7 +6,9 @@
     "dev": "python3 -m http.server 8080",
     "serve": "npx serve -p 8080 .",
     "deploy:pages": "npx wrangler pages deploy . --project-name=captiv-website",
-    "deploy:worker": "npx wrangler deploy"
+    "deploy:worker": "npx wrangler deploy",
+    "deploy": "wrangler deploy",
+    "build": "echo 'Static build ready'"
   },
   "keywords": [
     "captiv",
@@ -16,6 +18,8 @@
     "cloudflare-pages"
   ],
   "author": "CAPTIV Techno Solutions Pvt. Ltd.",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "wrangler": "^4.152.0"
+  }
 }
-
