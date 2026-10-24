@@ -53,8 +53,8 @@
       },
       {
         root: null,
-        rootMargin: '0px 0px -60px 0px',
-        threshold: 0.12
+        rootMargin: '0px 0px -20px 0px',
+        threshold: 0.05
       }
     );
 
@@ -117,17 +117,19 @@
     }
   }
 
-  // 4. Cursor Spotlight Follow on Cards
-  const spotlightCards = document.querySelectorAll('.spotlight-card');
-  spotlightCards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+  // 4. Cursor Spotlight Follow on Cards (Desktop mouse pointer only)
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const spotlightCards = document.querySelectorAll('.spotlight-card');
+    spotlightCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
     });
-  });
+  }
 
   // 5. Dynamic "How We Operate" Timeline Drawing
   function updateTimelineProgress() {
@@ -151,25 +153,27 @@
     }
   }
 
-  // 6. Interactive 3D Card Tilt
-  const tiltCards = document.querySelectorAll('.product-glow-card, .case-card');
-  tiltCards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -5;
-      const rotateY = ((x - centerX) / centerX) * 5;
+  // 6. Interactive 3D Card Tilt (Desktop mouse pointer only)
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const tiltCards = document.querySelectorAll('.product-glow-card, .case-card');
+    tiltCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-    });
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+      });
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
     });
-  });
+  }
 
   // Call initial scroll update
   updateScroll();
