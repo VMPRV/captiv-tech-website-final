@@ -1,0 +1,21 @@
+{
+  "name": "captiv-corporate-website",
+  "version": "2.0.0",
+  "description": "Enterprise Corporate Website for CAPTIV Techno Solutions Pvt. Ltd.",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "serve": "npx serve -p 8080 .",
+    "deploy:pages": "npx wrangler pages deploy . --project-name=captiv-website",
+    "deploy:worker": "npx wrangler deploy"
+  },
+  "keywords": [
+    "captiv",
+    "corporate-website",
+    "institutional-performance",
+    "enterprise-software",
+    "cloudflare-pages"
+  ],
+  "author": "CAPTIV Techno Solutions Pvt. Ltd.",
+  "license": "UNLICENSED"
+}
+
