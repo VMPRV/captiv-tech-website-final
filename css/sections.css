@@ -573,13 +573,17 @@
 @media (max-width: 1024px) {
   .perf-console {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+    margin-top: 32px;
+    margin-bottom: 28px;
   }
   .perf-bridge {
     flex-direction: row;
     padding: 10px 0;
+    width: 100%;
   }
   .perf-bridge-track {
+    flex: 1;
     width: auto;
     height: 2px;
     background: linear-gradient(to right, var(--blue), #E11D48);
@@ -587,20 +591,93 @@
   .perf-bridge-label {
     writing-mode: horizontal-tb;
     transform: none;
-    margin: 0 12px;
+    margin: 0 10px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+  .perf-bridge-orb {
+    width: 44px;
+    height: 44px;
+    margin: 0 6px;
+  }
+  .orb-inner {
+    width: 36px;
+    height: 36px;
   }
   .telemetry-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
   .perf-resolution-banner {
     flex-direction: column;
     align-items: flex-start;
+    padding: 24px 20px;
+    gap: 18px;
+  }
+  .resolution-right {
+    width: 100%;
+  }
+  .resolution-right .btn {
+    width: 100%;
   }
 }
 
 @media (max-width: 640px) {
+  .perf-wing {
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+  }
+  .perf-wing-header {
+    margin-bottom: 16px;
+  }
+  .perf-wing-header h3 {
+    font-size: 1.2rem;
+  }
+  .perf-stack-card {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .perf-stack-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  .perf-stack-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .perf-stack-info strong {
+    font-size: 0.88rem;
+  }
+  .perf-stack-info span {
+    font-size: 0.74rem;
+  }
+  .perf-tag-status {
+    font-size: 0.64rem;
+    padding: 3px 6px;
+    white-space: nowrap;
+  }
   .telemetry-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .telemetry-card {
+    padding: 18px 16px;
+  }
+  .telemetry-value {
+    font-size: 1.85rem;
+  }
+  .telemetry-desc {
+    font-size: 0.82rem;
+  }
+  .perf-resolution-banner {
+    padding: 20px 16px;
+  }
+  .perf-resolution-banner h4 {
+    font-size: 1.05rem;
+  }
+  .perf-resolution-banner p {
+    font-size: 0.85rem;
   }
 }
 
@@ -1800,31 +1877,427 @@ textarea.form-input {
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 0;
+    padding: 56px 0;
   }
-  .reality-grid,
-  .reality-items,
-  .metrics-grid,
-  .products-grid,
-  .projects-grid,
-  .work-grid,
-  .insights-grid,
-  .operate-grid,
-  .form-row,
-  .partners-grid,
-  .footer-top {
+
+  /* Section 1: Hero */
+  .hero-section {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + 24px);
+    padding-bottom: 40px;
+  }
+  .hero-eyebrow {
+    font-size: 0.74rem;
+    margin-bottom: 0.75rem;
+  }
+  .hero-heading {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+    line-height: 1.18;
+    margin-bottom: 1rem;
+  }
+  .hero-subtext {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    margin-bottom: 2.2rem;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .hero-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 18px 14px;
+    gap: 16px 10px;
+  }
+  .stat-item::after {
+    display: none !important;
+  }
+  .stat-number {
+    font-size: 1.85rem;
+    margin-bottom: 2px;
+  }
+  .stat-label {
+    font-size: 0.76rem;
+    line-height: 1.3;
+  }
+
+  /* Section 2: Sector Strip */
+  .sector-strip {
+    padding: 16px 0;
+  }
+  .sector-strip-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .sector-strip-label {
+    font-size: 0.72rem;
+  }
+  .sector-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+  .sector-pill {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    gap: 6px;
+  }
+  .sector-pill svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Section 4: Products Grid */
+  .products-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 32px;
   }
+  .product-glow-card {
+    padding: 24px 18px;
+  }
+  .product-emblem-wrap {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+  }
+  .product-glow-card h3 {
+    font-size: 1.25rem;
+  }
+  .product-glow-card p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .product-card-bottom {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  /* Section 5: Industries */
+  .industries-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .industry-card {
+    padding: 22px 18px;
+  }
+  .industry-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 14px;
+  }
+  .industry-card h3 {
+    font-size: 1.15rem;
+  }
+  .industry-card p {
+    font-size: 0.88rem;
+  }
+
+  /* Section 6: Projects */
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .project-card {
+    padding: 22px 18px;
+  }
+  .project-header {
+    min-height: auto;
+    margin-bottom: 14px;
+  }
+  .project-card h3 {
+    font-size: 1.15rem;
+  }
+  .project-card p {
+    font-size: 0.88rem;
+  }
+
+  /* Section 7: Marquee */
+  .marquee-section {
+    padding: 36px 0;
+  }
+  .marquee-heading {
+    font-size: 0.75rem;
+    margin-bottom: 20px;
+  }
+  .marquee-track {
+    gap: 20px;
+  }
+  .marquee-item {
+    width: 136px;
+    height: 56px;
+    padding: 6px 12px;
+  }
+  .marquee-item img {
+    max-width: 100px;
+    max-height: 32px;
+  }
+
+  /* Section 8: Partners (Clean 2-column mobile layout) */
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .partner-card {
+    padding: 16px 10px;
+  }
+  .partner-logo-img {
+    height: 32px;
+    max-width: 90px;
+    margin-bottom: 10px;
+  }
+  .partner-name {
+    font-size: 0.82rem;
+  }
+  .partner-tier {
+    font-size: 0.68rem;
+  }
+
+  /* Section 9: Global Presence */
+  .global-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 32px;
+  }
+  .global-info h3 {
+    font-size: 1.35rem;
+  }
+  .map-wrapper {
+    padding: 12px;
+    border-radius: var(--radius-md);
+  }
+  .global-map {
+    min-height: 220px;
+    aspect-ratio: 16 / 9;
+  }
+  .region-label {
+    display: none; /* Hide cluttered labels on small mobile touchscreens */
+  }
+  .map-dot {
+    width: 9px;
+    height: 9px;
+    top: 4px;
+    left: 4px;
+    border-width: 2px;
+  }
+  .map-pulse {
+    width: 17px;
+    height: 17px;
+  }
+  .region-item {
+    padding: 12px 14px;
+  }
+  .region-item strong {
+    font-size: 0.88rem;
+  }
+  .region-item p {
+    font-size: 0.82rem;
+  }
+
+  /* Section 10: Our Work */
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .case-visual {
+    height: 170px;
+  }
+  .case-body {
+    padding: 20px 16px;
+  }
+  .case-body h3 {
+    font-size: 1.18rem;
+  }
+  .case-body p {
+    font-size: 0.88rem;
+  }
+
+  /* Section 11: How We Operate */
+  .operate-timeline-wrap {
+    margin-top: 36px;
+  }
+  .operate-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .operate-node {
+    padding: 20px 16px;
+  }
+  .operate-step-num {
+    width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+  .operate-node h3 {
+    font-size: 1.15rem;
+  }
+  .operate-node p {
+    font-size: 0.88rem;
+  }
+
+  /* Section 12: Insights */
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .insight-card {
+    padding: 20px 16px;
+  }
+  .insight-card h3 {
+    font-size: 1.15rem;
+  }
+  .insight-card p {
+    font-size: 0.88rem;
+  }
+  .insight-meta {
+    margin-top: 16px;
+    padding-top: 12px;
+  }
+
+  /* Section 13: Careers Banner — Fix horizontal overflow */
   .careers-banner {
     flex-direction: column;
-    padding: 36px 24px;
+    padding: 32px 18px;
+    gap: 24px;
+    text-align: center;
+    border-radius: var(--radius-md);
+  }
+  .careers-banner-content {
+    max-width: 100%;
+  }
+  .careers-banner-content h2 {
+    font-size: clamp(1.5rem, 5.5vw, 2.1rem);
+  }
+  .careers-banner-content .btn {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
   }
   .careers-orbit {
-    margin: 0 auto;
+    width: 180px;
+    height: 180px;
+    margin: 10px auto;
+  }
+  .orbit-tag {
+    font-size: 0.65rem;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+  .orbit-tag-1 { top: -6px; }
+  .orbit-tag-2 { bottom: 12%; left: -6px; }
+  .orbit-tag-3 { bottom: 12%; right: -6px; }
+
+  /* Section 14: Contact CTA Section */
+  .contact-cta-section {
+    padding: 56px 0;
+  }
+  .cta-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cta-left-brand-img {
+    height: 36px;
+    margin-bottom: 18px;
+  }
+  .cta-form {
+    padding: 22px 16px;
+    border-radius: var(--radius-md);
+  }
+  .chips-label {
+    font-size: 0.82rem;
+  }
+  .chips-wrap {
+    gap: 6px;
+  }
+  .chip-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .form-group {
+    margin-bottom: 14px;
+  }
+  .form-group label {
+    font-size: 0.8rem;
+  }
+  .form-input {
+    padding: 10px 14px;
+    font-size: 16px !important;
+  }
+  .cta-form button[type="submit"] {
+    width: 100%;
+    padding: 13px;
+    font-size: 0.92rem;
+    white-space: normal;
+  }
+
+  /* Section 15: Footer */
+  .site-footer {
+    padding: 48px 0 24px 0;
+  }
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+  .footer-brand-col {
+    padding-right: 0;
+  }
+  .footer-logo-img {
+    height: 38px;
+  }
+  .footer-tagline {
+    font-size: 0.9rem;
+  }
+  .footer-desc {
+    font-size: 0.84rem;
+  }
+  .footer-col h4 {
+    font-size: 0.88rem;
+    margin-bottom: 12px;
+  }
+  .footer-col ul {
+    gap: 10px;
+  }
+  .footer-col a {
+    font-size: 0.86rem;
+  }
+  .footer-contact-block {
+    font-size: 0.84rem;
   }
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
+    padding-top: 20px;
+    font-size: 0.78rem;
+  }
+  .footer-legal-links {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .footer-flags {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }
 

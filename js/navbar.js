@@ -42,6 +42,16 @@
   if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   if (mobileOverlay) mobileOverlay.addEventListener('click', closeDrawer);
 
+  // Close drawer when clicking any navigating link inside the mobile drawer
+  if (mobileDrawer) {
+    const drawerLinks = mobileDrawer.querySelectorAll('a:not(.mobile-accordion-toggle)');
+    drawerLinks.forEach((link) => {
+      link.addEventListener('click', function () {
+        closeDrawer();
+      });
+    });
+  }
+
   // Close drawer on escape key
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeDrawer();

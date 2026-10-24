@@ -533,6 +533,118 @@ p {
 }
 
 /* ==========================================================================
+   Mobile Responsive Foundations (Core System)
+   ========================================================================== */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  .lead-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 6.5vw, 2.6rem);
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    font-size: clamp(1.45rem, 5vw, 2rem);
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: 1.22rem;
+  }
+
+  h4 {
+    font-size: 1.05rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  /* Prevent automatic viewport zoom on iOS when focusing form fields */
+  input, textarea, select, .form-input {
+    font-size: 16px !important;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    font-size: 0.92rem;
+    gap: 8px;
+  }
+
+  .back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Disable blurred orbs on mobile to avoid GPU lag and eliminate horizontal scroll */
+  .orb {
+    display: none !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .btn {
+    white-space: normal;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .glow-border-card {
+    padding: 24px 18px;
+  }
+
+  .spotlight-card {
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ==========================================================================
    Accessibility & Prefers Reduced Motion
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {

@@ -423,8 +423,10 @@
   top: 0;
   right: 0;
   bottom: 0;
+  height: 100vh;
+  height: 100dvh;
   width: 320px;
-  max-width: 85vw;
+  max-width: 86vw;
   background: #FFFFFF;
   box-shadow: -10px 0 40px rgba(11, 15, 26, 0.15);
   z-index: 2000;
@@ -433,6 +435,8 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .mobile-drawer.active {
@@ -554,6 +558,69 @@
   }
   .site-header {
     height: 72px;
+  }
+  .nav-btn-contact {
+    padding: 8px 16px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    height: 64px;
+  }
+  .site-header.scrolled {
+    height: 58px;
+  }
+  .nav-container {
+    padding: 0 16px;
+  }
+  .nav-brand {
+    padding-right: 0;
+  }
+  .nav-logo-img {
+    height: 34px;
+    max-width: 150px;
+  }
+  .nav-actions {
+    gap: 10px;
+  }
+  .nav-btn-contact {
+    display: none; /* Hide top contact CTA on mobile, drawer and page CTA provide clear actions */
+  }
+  .hamburger-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .hamburger-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  .mobile-drawer {
+    width: 300px;
+    max-width: 85vw;
+  }
+  .mobile-drawer-header {
+    padding: 16px 18px;
+  }
+  .mobile-drawer-body {
+    padding: 16px 18px;
+  }
+  .mobile-nav-link {
+    padding: 11px 12px;
+    font-size: 0.96rem;
+  }
+  .mobile-accordion-panel a {
+    padding: 9px 12px;
+    font-size: 0.86rem;
+  }
+  .mobile-drawer-footer {
+    padding: 16px 18px max(16px, env(safe-area-inset-bottom, 16px)) 18px;
+  }
+  .mobile-contact-info {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    gap: 6px;
   }
 }
 
