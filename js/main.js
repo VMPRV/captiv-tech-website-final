@@ -175,6 +175,56 @@
     });
   }
 
+  // 7. Site Preloader / Splash Intro with Animated Video
+  const sitePreloader = document.getElementById('sitePreloader');
+  if (sitePreloader) {
+    const preloaderVideo = document.getElementById('preloaderVideo');
+    const preloaderSkip = document.getElementById('preloaderSkip');
+    let preloaderDismissed = false;
+
+    function dismissPreloader() {
+      if (preloaderDismissed) return;
+      preloaderDismissed = true;
+      sitePreloader.classList.add('loaded');
+      try {
+        sessionStorage.setItem('captiv_preloader_seen', '1');
+      } catch (e) {}
+
+      setTimeout(() => {
+        sitePreloader.style.display = 'none';
+        if (preloaderVideo && typeof preloaderVideo.pause === 'function') {
+          preloaderVideo.pause();
+        }
+      }, 550);
+    }
+
+    if (preloaderSkip) {
+      preloaderSkip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissPreloader();
+      });
+    }
+
+    sitePreloader.addEventListener('click', dismissPreloader);
+
+    if (preloaderVideo) {
+      preloaderVideo.addEventListener('ended', dismissPreloader);
+      // Attempt play in case autoplay was restricted
+      preloaderVideo.play().catch(() => {});
+    }
+
+    // Safety timeout: dismiss after 2.6 seconds or 400ms if already seen
+    const alreadySeen = (function () {
+      try {
+        return sessionStorage.getItem('captiv_preloader_seen') === '1';
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    setTimeout(dismissPreloader, alreadySeen ? 400 : 2600);
+  }
+
   // Call initial scroll update
   updateScroll();
 })();

@@ -8,10 +8,32 @@
   <link rel="icon" type="image/png" href="assets/captiv-symbol.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="css/main.css?v=2.2">
-  <link rel="stylesheet" href="css/navbar.css?v=2.2">
-  <link rel="stylesheet" href="css/sections.css?v=2.2">
-  <link rel="stylesheet" href="css/pages.css?v=2.2">
+  <link rel="stylesheet" href="css/main.css?v=3.0">
+  <link rel="stylesheet" href="css/navbar.css?v=3.0">
+  <link rel="stylesheet" href="css/sections.css?v=3.0">
+  <link rel="stylesheet" href="css/pages.css?v=3.0">
+  <!-- Mobile View Fail-Safe Navbar Styles (Zero Overflow Guarantee on all Mobile Viewports) -->
+  <style id="mobile-nav-inline">
+    @media (max-width: 768px) {
+      .site-header { height: 60px !important; }
+      .site-header.scrolled { height: 56px !important; }
+      .nav-container { padding: 0 12px !important; width: 100% !important; max-width: 100% !important; display: flex !important; align-items: center !important; justify-content: space-between !important; box-sizing: border-box !important; overflow: hidden !important; }
+      .nav-brand { padding-right: 0 !important; margin-right: 6px !important; flex-shrink: 1 !important; min-width: 0 !important; display: flex !important; align-items: center !important; height: auto !important; }
+      .nav-logo-img { height: 26px !important; width: auto !important; max-width: 115px !important; object-fit: contain !important; }
+      .nav-actions { display: flex !important; align-items: center !important; gap: 6px !important; flex-shrink: 0 !important; margin-left: auto !important; }
+      .nav-btn-contact { display: inline-flex !important; padding: 6px 11px !important; font-size: 0.78rem !important; font-weight: 600 !important; height: 33px !important; line-height: 1 !important; border-radius: 4px !important; white-space: nowrap !important; letter-spacing: 0 !important; flex-shrink: 0 !important; box-shadow: none !important; align-items: center !important; }
+      .nav-btn-contact svg { display: none !important; }
+      .hamburger-btn { display: inline-flex !important; width: 34px !important; height: 34px !important; min-width: 34px !important; padding: 0 !important; border-radius: 4px !important; align-items: center !important; justify-content: center !important; flex-shrink: 0 !important; }
+      .hamburger-btn svg { width: 20px !important; height: 20px !important; }
+    }
+    @media (max-width: 380px) {
+      .nav-container { padding: 0 8px !important; }
+      .nav-logo-img { height: 23px !important; max-width: 98px !important; }
+      .nav-actions { gap: 5px !important; }
+      .nav-btn-contact { padding: 5px 9px !important; font-size: 0.74rem !important; height: 31px !important; }
+      .hamburger-btn { width: 32px !important; height: 32px !important; min-width: 32px !important; }
+    }
+  </style>
 </head>
 
 <body>
@@ -305,8 +327,8 @@
   </footer>
 
   <button class="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"/></svg></button>
-  <script src="js/navbar.js?v=2.2"></script>
-  <script src="js/main.js?v=2.2"></script>
+  <script src="js/navbar.js?v=3.0"></script>
+  <script src="js/main.js?v=3.0"></script>
 </body>
 </html>
 

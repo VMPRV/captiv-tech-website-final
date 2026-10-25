@@ -1590,6 +1590,23 @@
   margin-bottom: 28px;
 }
 
+.cta-left-brand-wrap {
+  margin-bottom: 24px;
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: transparent;
+}
+
+.cta-left-brand-video {
+  height: 52px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  background: transparent;
+  display: block;
+}
+
 /* Interest Chips */
 .chips-group {
   margin-bottom: 24px;
@@ -2213,6 +2230,13 @@ textarea.form-input {
   }
   .cta-left-brand-img {
     height: 36px;
+    margin-bottom: 18px;
+  }
+  .cta-left-brand-video {
+    height: 40px;
+    max-width: 170px;
+  }
+  .cta-left-brand-wrap {
     margin-bottom: 18px;
   }
   .cta-form {
