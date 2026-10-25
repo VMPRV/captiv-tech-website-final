@@ -692,13 +692,13 @@ p {
   align-items: center;
   justify-content: center;
   text-align: center;
-  max-width: 520px;
+  max-width: 680px;
   width: 100%;
 }
 
 .preloader-video-wrapper {
   width: 100%;
-  max-width: 460px;
+  max-width: 620px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -709,19 +709,19 @@ p {
 .preloader-video {
   width: 100%;
   height: auto;
-  max-height: 220px;
+  max-height: 300px;
   object-fit: contain;
   background: #FFFFFF;
 }
 
 .preloader-bar-wrap {
-  width: 180px;
-  max-width: 60vw;
+  width: 220px;
+  max-width: 65vw;
   height: 3px;
   background: rgba(0, 25, 160, 0.08);
   border-radius: var(--radius-full);
   overflow: hidden;
-  margin-top: 18px;
+  margin-top: 20px;
   position: relative;
 }
 
@@ -733,12 +733,13 @@ p {
   width: 0%;
   background: var(--brand-gradient);
   border-radius: var(--radius-full);
-  animation: preloaderFill 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: preloaderFill 5.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes preloaderFill {
   0% { width: 0%; }
-  60% { width: 75%; }
+  50% { width: 55%; }
+  75% { width: 85%; }
   100% { width: 100%; }
 }
 
@@ -777,15 +778,18 @@ p {
 }
 
 @media (max-width: 480px) {
+  .preloader-video-wrapper {
+    max-width: 92vw;
+  }
   .preloader-video {
-    max-height: 150px;
+    max-height: 180px;
   }
   .preloader-bar-wrap {
-    width: 140px;
+    width: 160px;
     margin-top: 14px;
   }
   .preloader-meta {
-    max-width: 270px;
+    max-width: 280px;
   }
   .preloader-caption {
     font-size: 0.65rem;

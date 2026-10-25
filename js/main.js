@@ -208,21 +208,20 @@
     sitePreloader.addEventListener('click', dismissPreloader);
 
     if (preloaderVideo) {
+      // Dismiss smoothly once video finishes or reaches the 5.6s full lockup
       preloaderVideo.addEventListener('ended', dismissPreloader);
-      // Attempt play in case autoplay was restricted
+      preloaderVideo.addEventListener('timeupdate', function () {
+        if (preloaderVideo.currentTime >= 5.6) {
+          dismissPreloader();
+        }
+      });
+      // Attempt play immediately
       preloaderVideo.play().catch(() => {});
     }
 
-    // Safety timeout: dismiss after 2.6 seconds or 400ms if already seen
-    const alreadySeen = (function () {
-      try {
-        return sessionStorage.getItem('captiv_preloader_seen') === '1';
-      } catch (e) {
-        return false;
-      }
-    })();
-
-    setTimeout(dismissPreloader, alreadySeen ? 400 : 2600);
+    // Safety timeout: dismiss after 6.0 seconds so the complete 6s animation
+    // (ribbon + CAPTIV + EXCELLENCE DELIVERED) is 100% visible
+    setTimeout(dismissPreloader, 6000);
   }
 
   // Call initial scroll update
