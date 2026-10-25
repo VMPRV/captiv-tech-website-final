@@ -8,10 +8,10 @@
   <link rel="icon" type="image/png" href="assets/captiv-symbol.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="css/main.css?v=3.0">
-  <link rel="stylesheet" href="css/navbar.css?v=3.0">
-  <link rel="stylesheet" href="css/sections.css?v=3.0">
-  <link rel="stylesheet" href="css/pages.css?v=3.0">
+  <link rel="stylesheet" href="css/main.css?v=3.2">
+  <link rel="stylesheet" href="css/navbar.css?v=3.2">
+  <link rel="stylesheet" href="css/sections.css?v=3.2">
+  <link rel="stylesheet" href="css/pages.css?v=3.2">
   <!-- Mobile View Fail-Safe Navbar Styles (Zero Overflow Guarantee on all Mobile Viewports) -->
   <style id="mobile-nav-inline">
     @media (max-width: 768px) {
@@ -32,6 +32,171 @@
       .nav-actions { gap: 5px !important; }
       .nav-btn-contact { padding: 5px 9px !important; font-size: 0.74rem !important; height: 31px !important; }
       .hamburger-btn { width: 32px !important; height: 32px !important; min-width: 32px !important; }
+    }
+  </style>
+
+  <!-- Leadership Section Inline Styles (Fail-safe: Immune to CDN caching) -->
+  <style id="leadership-inline-styles">
+    .leader-featured-card {
+      background: #FFFFFF !important;
+      border: 1px solid #E3E8F0 !important;
+      border-radius: 16px !important;
+      padding: 36px 40px !important;
+      box-shadow: 0 4px 20px rgba(11, 15, 26, 0.05) !important;
+      display: grid !important;
+      grid-template-columns: 220px 1fr !important;
+      gap: 36px !important;
+      align-items: center !important;
+      position: relative !important;
+      margin-top: 36px !important;
+      box-sizing: border-box !important;
+    }
+    .leader-featured-media {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+    }
+    .leader-portrait-frame {
+      width: 170px !important;
+      height: 170px !important;
+      border-radius: 12px !important;
+      background: linear-gradient(135deg, rgba(0, 25, 160, 0.06), rgba(8, 137, 26, 0.06)) !important;
+      border: 2px solid rgba(0, 25, 160, 0.12) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 6px 18px rgba(0, 25, 160, 0.08) !important;
+    }
+    .leader-monogram {
+      font-size: 3rem !important;
+      font-weight: 800 !important;
+      color: #0019A0 !important;
+      letter-spacing: -0.02em !important;
+      user-select: none !important;
+    }
+    .leader-featured-content {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .leader-featured-header {
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+      gap: 16px !important;
+      flex-wrap: wrap !important;
+      margin-bottom: 8px !important;
+    }
+    .leader-name-block h3 {
+      font-size: 1.6rem !important;
+      font-weight: 700 !important;
+      color: #0B0F1A !important;
+      line-height: 1.2 !important;
+      margin: 0 !important;
+    }
+    .leader-title {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      color: #0019A0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      margin-top: 4px !important;
+    }
+    .linkedin-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 8px 16px !important;
+      background: #0A66C2 !important;
+      color: #FFFFFF !important;
+      border-radius: 6px !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      box-shadow: 0 2px 6px rgba(10, 102, 194, 0.25) !important;
+      white-space: nowrap !important;
+      line-height: 1 !important;
+    }
+    .linkedin-btn:hover {
+      background: #004182 !important;
+    }
+    .linkedin-btn svg {
+      width: 16px !important;
+      height: 16px !important;
+      max-width: 16px !important;
+      max-height: 16px !important;
+      min-width: 16px !important;
+      fill: #FFFFFF !important;
+      display: inline-block !important;
+      flex-shrink: 0 !important;
+    }
+    .leader-credential-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      padding: 5px 12px !important;
+      border-radius: 9999px !important;
+      background: rgba(0, 25, 160, 0.05) !important;
+      border: 1px solid rgba(0, 25, 160, 0.12) !important;
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      color: #0019A0 !important;
+      margin-top: 10px !important;
+      width: fit-content !important;
+    }
+    .leader-bio {
+      font-size: 0.94rem !important;
+      line-height: 1.7 !important;
+      color: #334155 !important;
+      margin-top: 14px !important;
+      margin-bottom: 18px !important;
+    }
+    .leader-tags {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-bottom: 22px !important;
+    }
+    .leader-tag {
+      font-size: 0.76rem !important;
+      font-weight: 500 !important;
+      padding: 4px 10px !important;
+      border-radius: 4px !important;
+      background: #F5F8FC !important;
+      color: #334155 !important;
+      border: 1px solid #E3E8F0 !important;
+      display: inline-block !important;
+    }
+    .leader-actions {
+      display: flex !important;
+      align-items: center !important;
+      gap: 12px !important;
+      flex-wrap: wrap !important;
+    }
+    @media (max-width: 768px) {
+      .leader-featured-card {
+        grid-template-columns: 1fr !important;
+        padding: 24px 18px !important;
+        gap: 20px !important;
+      }
+      .leader-featured-media {
+        align-items: center !important;
+      }
+      .leader-portrait-frame {
+        width: 130px !important;
+        height: 130px !important;
+      }
+      .leader-monogram {
+        font-size: 2.2rem !important;
+      }
+      .leader-name-block h3 {
+        font-size: 1.35rem !important;
+      }
+      .leader-bio {
+        font-size: 0.88rem !important;
+        line-height: 1.6 !important;
+      }
     }
   </style>
 </head>
@@ -255,8 +420,8 @@
               </div>
               
               <a href="https://www.linkedin.com/in/captivsaravanan/" target="_blank" rel="noopener noreferrer" class="linkedin-btn" aria-label="Saravanan Krishnamoorthy on LinkedIn">
-                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                Connect on LinkedIn
+                <svg viewBox="0 0 24 24" width="16" height="16" style="width: 16px !important; height: 16px !important; max-width: 16px !important; max-height: 16px !important; min-width: 16px !important; flex-shrink: 0; fill: #FFFFFF; display: inline-block;"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                <span>Connect on LinkedIn</span>
               </a>
             </div>
 
