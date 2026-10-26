@@ -196,7 +196,7 @@ export default {
     if (url.pathname === '/api/careers' && request.method === 'POST') {
       try {
         const body = await request.json();
-        const { name, email, phone, role, link, message } = body;
+        const { name, email, phone, role, resume, link, message } = body;
 
         if (!name || !email) {
           return new Response(JSON.stringify({
@@ -209,7 +209,7 @@ export default {
 
         // The exact confirmation text requested by the user
         const applicantConfirmationText = `Dear ${name}\n\n` +
-          `Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume in response to the job opportunity ${selectedRole}.\n\n` +
+          `Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume${resume ? ` (${resume})` : ''} in response to the job opportunity ${selectedRole}.\n\n` +
           `We will review your resume, and if your skills and qualifications match the position requirements, a member of our recruiting team will contact you directly.\n\n` +
           `Sincerely,\n\n` +
           `CAPTIV Recruitment Team\n` +
@@ -222,6 +222,7 @@ export default {
           `Candidate Email: ${email}\n` +
           `Phone Number: ${phone || 'Not Provided'}\n` +
           `Target Opportunity: ${selectedRole}\n` +
+          `Resume / CV File: ${resume || 'Attached'}\n` +
           `Portfolio / GitHub / Profile: ${link || 'Not Provided'}\n\n` +
           `Engineering Problem / Candidate Notes:\n${message || 'N/A'}\n\n` +
           `Timestamp: ${new Date().toUTCString()}\n` +

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/main.css?v=4.0">
   <link rel="stylesheet" href="css/navbar.css?v=4.0">
-  <link rel="stylesheet" href="css/sections.css?v=4.0">
+  <link rel="stylesheet" href="css/sections.css?v=4.1">
   <link rel="stylesheet" href="css/pages.css?v=3.5">
   <!-- Mobile View Fail-Safe Navbar Styles (Zero Overflow Guarantee on all Mobile Viewports) -->
   <style id="mobile-nav-inline">
@@ -331,29 +331,29 @@
         <div class="section-header" style="margin-bottom: 36px;">
           <div class="eyebrow">SUBMIT YOUR PROFILE</div>
           <h2>Join CAPTIV Institutional Engineering</h2>
-          <p>Submit your profile directly to our talent acquisition team. All applications are delivered to <strong>hr@captivtech.com</strong>.</p>
+          <p>Submit your profile directly to our talent acquisition team. All applications are reviewed by our hiring managers.</p>
         </div>
 
-        <form class="contact-form" id="careerForm" style="background: var(--bg-soft); padding: 40px; border-radius: var(--radius-md); border: 1px solid var(--border);">
+        <form class="contact-form" id="careerForm" style="padding: 40px; border-radius: var(--radius-md);">
           <div class="form-row">
             <div class="form-group">
               <label for="applicant-name">Full Name *</label>
-              <input type="text" id="applicant-name" name="name" class="form-input" style="background: #FFFFFF; color: var(--ink);" placeholder="e.g. John Doe" required>
+              <input type="text" id="applicant-name" name="name" class="form-input" placeholder="e.g. John Doe" required>
             </div>
             <div class="form-group">
               <label for="applicant-email">Email Address *</label>
-              <input type="email" id="applicant-email" name="email" class="form-input" style="background: #FFFFFF; color: var(--ink);" placeholder="Your Mail ID " required>
+              <input type="email" id="applicant-email" name="email" class="form-input" placeholder="Your Mail ID" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="applicant-phone">Phone Number *</label>
-              <input type="tel" id="applicant-phone" name="phone" class="form-input" style="background: #FFFFFF; color: var(--ink);" placeholder="+91 98765 43210" required>
+              <input type="tel" id="applicant-phone" name="phone" class="form-input" placeholder="+91 98765 43210" required>
             </div>
             <div class="form-group">
               <label for="applicant-role">Opportunity / Position *</label>
-              <select id="applicant-role" name="role" class="form-input" style="background: #FFFFFF; color: var(--ink);" required>
+              <select id="applicant-role" name="role" class="form-input" required>
                 <option value="J1026-1149 - Service Desk Technical Analyst" selected>J1026-1149 - Service Desk Technical Analyst</option>
                 <option value="J1026-1150 - Principal Cloud Systems Architect (SkyVerse)">J1026-1150 - Principal Cloud Systems Architect (SkyVerse)</option>
                 <option value="J1026-1151 - Senior Backend Engineer (Core Banking / AION)">J1026-1151 - Senior Backend Engineer (Core Banking / AION)</option>
@@ -366,18 +366,52 @@
             </div>
           </div>
 
+          <!-- RESUME / CV UPLOAD SECTION -->
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="applicant-resume">Resume / Curriculum Vitae (PDF, DOC, DOCX) *</label>
+            <div class="resume-dropzone" id="resumeDropzone">
+              <input type="file" id="applicant-resume" name="resume" class="resume-file-input" accept=".pdf,.doc,.docx" required>
+              <div class="resume-dropzone-content" id="dropzoneContent">
+                <div class="resume-icon-wrap">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="resume-dropzone-text">
+                  <span class="resume-prompt"><strong>Click to upload</strong> or drag and drop your Resume / CV</span>
+                  <span class="resume-formats">Accepted formats: PDF, DOC, DOCX (Max size: 10 MB)</span>
+                </div>
+              </div>
+              <div class="resume-file-preview" id="resumePreview" style="display: none;">
+                <div class="resume-file-info">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <div class="resume-file-meta">
+                    <span class="resume-file-name" id="resumeFileName">resume.pdf</span>
+                    <span class="resume-file-size" id="resumeFileSize">0 KB</span>
+                  </div>
+                </div>
+                <button type="button" class="resume-remove-btn" id="resumeRemoveBtn" aria-label="Remove attached file">&times;</button>
+              </div>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="applicant-link">LinkedIn Profile / GitHub / Portfolio URL *</label>
-            <input type="url" id="applicant-link" name="link" class="form-input" style="background: #FFFFFF; color: var(--ink);" placeholder="https://linkedin.com/in/... or https://github.com/..." required>
+            <input type="url" id="applicant-link" name="link" class="form-input" placeholder="https://linkedin.com/in/... or https://github.com/..." required>
           </div>
 
           <div class="form-group">
             <label for="applicant-notes">Relevant Experience &amp; Technical Problem Solved</label>
-            <textarea id="applicant-notes" name="message" class="form-input" style="background: #FFFFFF; color: var(--ink);" rows="3" placeholder="Tell us briefly about systems, incident workflows, or architectural challenges you have managed..."></textarea>
+            <textarea id="applicant-notes" name="message" class="form-input" rows="3" placeholder="Tell us briefly about systems, incident workflows, or architectural challenges you have managed..."></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
-            Submit Application Directly to hr@captivtech.com &rarr;
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: 600;">
+            Submit Application &rarr;
           </button>
           <div class="form-feedback" role="alert" style="margin-top: 16px;"></div>
         </form>
@@ -402,7 +436,7 @@
                 Print / Save PDF
               </button>
               <a href="#" id="receiptMailtoBtn" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">
-                Open in Email Client (hr@captivtech.com) &rarr;
+                Open in Email Client &rarr;
               </a>
             </div>
           </div>
@@ -493,7 +527,7 @@
 
   <button class="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="18 15 12 9 6 15"/></svg></button>
   <script src="js/navbar.js?v=3.5"></script>
-  <script src="js/contact.js?v=3.5"></script>
+  <script src="js/contact.js?v=4.1"></script>
   <script src="js/main.js?v=3.5"></script>
 </body>
 </html>

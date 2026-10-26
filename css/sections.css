@@ -1879,6 +1879,185 @@ textarea.form-input {
 }
 
 /* ==========================================================================
+   CAREERS APPLICATION FORM & RESUME UPLOAD COMPONENT
+   ========================================================================== */
+#careerForm {
+  background: #FFFFFF !important;
+  box-shadow: 0 10px 30px rgba(0, 31, 168, 0.06);
+  border: 1px solid #E2E8F0 !important;
+}
+
+#careerForm .form-group label {
+  color: #0F172A !important;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+#careerForm .form-input {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  font-size: 0.9375rem;
+}
+
+#careerForm .form-input:focus {
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 0 3px rgba(0, 56, 144, 0.12) !important;
+}
+
+#careerForm .form-input::placeholder {
+  color: #94A3B8 !important;
+}
+
+#careerForm button[type="submit"] {
+  background: linear-gradient(180deg, #001FA8 0%, #001375 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(0, 25, 160, 0.25) !important;
+  transition: all 0.25s ease;
+}
+
+#careerForm button[type="submit"]:hover {
+  background: linear-gradient(180deg, #0025C5 0%, #00178A 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 25, 160, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+/* Resume Upload Drag & Drop Zone */
+.resume-dropzone {
+  position: relative;
+  border: 2px dashed #CBD5E1;
+  border-radius: var(--radius-md);
+  background: #F8FAFC;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.resume-dropzone:hover,
+.resume-dropzone.dragover {
+  border-color: var(--blue);
+  background: rgba(0, 56, 144, 0.03);
+}
+
+.resume-file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.resume-dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.resume-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 56, 144, 0.08);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.resume-dropzone:hover .resume-icon-wrap {
+  transform: translateY(-2px);
+}
+
+.resume-dropzone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resume-prompt {
+  font-size: 0.9375rem;
+  color: #1E293B;
+}
+
+.resume-prompt strong {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.resume-formats {
+  font-size: 0.8125rem;
+  color: #64748B;
+}
+
+.resume-file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 56, 144, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 56, 144, 0.05);
+  position: relative;
+  z-index: 3;
+}
+
+.resume-file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--blue);
+}
+
+.resume-file-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.resume-file-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #0F172A;
+  max-width: 380px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume-file-size {
+  font-size: 0.775rem;
+  color: #64748B;
+}
+
+.resume-remove-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.resume-remove-btn:hover {
+  color: #DC2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* ==========================================================================
    SECTION 15: FOOTER
    Clean, Balanced Multi-Column Grid & Flush Bottom Bar Alignment
    ========================================================================== */

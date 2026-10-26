@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   try {
     const body = await request.json();
-    const { name, email, phone, role, link, message } = body;
+    const { name, email, phone, role, resume, link, message } = body;
 
     if (!name || !email) {
       return new Response(
@@ -20,13 +20,13 @@ export async function onRequestPost(context) {
     const selectedRole = role || 'J1026-1149 - Service Desk Technical Analyst';
 
     const applicantConfirmationText = `Dear ${name}\n\n` +
-      `Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume in response to the job opportunity ${selectedRole}.\n\n` +
+      `Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume${resume ? ` (${resume})` : ''} in response to the job opportunity ${selectedRole}.\n\n` +
       `We will review your resume, and if your skills and qualifications match the position requirements, a member of our recruiting team will contact you directly.\n\n` +
       `Sincerely,\n\n` +
       `CAPTIV Recruitment Team\n` +
       `CAPTIV`;
 
-    console.log(`[CAREER APPLICATION -> hr@captivtech.com] Role: ${selectedRole} - Candidate: ${name} (${email})`);
+    console.log(`[CAREER APPLICATION -> hr@captivtech.com] Role: ${selectedRole} - Candidate: ${name} (${email}) - Resume: ${resume || 'None'}`);
 
     if (env && env.RESEND_API_KEY) {
       try {
@@ -42,7 +42,7 @@ export async function onRequestPost(context) {
             to: ['hr@captivtech.com'],
             reply_to: email,
             subject: `CAPTIV Job Application: ${selectedRole} - ${name}`,
-            text: `Candidate Name: ${name}\nCandidate Email: ${email}\nPhone: ${phone}\nPosition: ${selectedRole}\nProfile: ${link}\n\nNotes:\n${message}`
+            text: `Candidate Name: ${name}\nCandidate Email: ${email}\nPhone: ${phone}\nPosition: ${selectedRole}\nResume / CV File: ${resume || 'Attached'}\nProfile: ${link}\n\nNotes:\n${message}`
           })
         });
 

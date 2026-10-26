@@ -199,6 +199,91 @@
     const printBtn = document.getElementById('receiptPrintBtn');
     const mailtoBtn = document.getElementById('receiptMailtoBtn');
 
+    // Resume Dropzone Elements
+    const resumeInput = document.getElementById('applicant-resume');
+    const resumeDropzone = document.getElementById('resumeDropzone');
+    const dropzoneContent = document.getElementById('dropzoneContent');
+    const resumePreview = document.getElementById('resumePreview');
+    const resumeFileName = document.getElementById('resumeFileName');
+    const resumeFileSize = document.getElementById('resumeFileSize');
+    const resumeRemoveBtn = document.getElementById('resumeRemoveBtn');
+
+    function formatFileSize(bytes) {
+      if (!bytes || bytes === 0) return '0 KB';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    function resetResumeDropzone() {
+      if (resumeInput) resumeInput.value = '';
+      if (dropzoneContent) dropzoneContent.style.display = 'flex';
+      if (resumePreview) resumePreview.style.display = 'none';
+      if (resumeDropzone) resumeDropzone.classList.remove('dragover');
+    }
+
+    function handleResumeFile(file) {
+      if (!file) return false;
+      const validExtensions = ['.pdf', '.doc', '.docx'];
+      const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+      if (!validExtensions.includes(fileExt)) {
+        showFeedback('Please upload a valid Resume in PDF, DOC, or DOCX format.', 'error');
+        resetResumeDropzone();
+        return false;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        showFeedback('File size exceeds the 10 MB limit. Please upload a smaller document.', 'error');
+        resetResumeDropzone();
+        return false;
+      }
+
+      if (resumeFileName) resumeFileName.textContent = file.name;
+      if (resumeFileSize) resumeFileSize.textContent = formatFileSize(file.size);
+      if (dropzoneContent) dropzoneContent.style.display = 'none';
+      if (resumePreview) resumePreview.style.display = 'flex';
+      return true;
+    }
+
+    if (resumeInput && resumeDropzone) {
+      resumeInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+          handleResumeFile(this.files[0]);
+        }
+      });
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        resumeDropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          resumeDropzone.classList.add('dragover');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        resumeDropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          resumeDropzone.classList.remove('dragover');
+        }, false);
+      });
+
+      resumeDropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length) {
+          resumeInput.files = dt.files;
+          handleResumeFile(dt.files[0]);
+        }
+      });
+
+      if (resumeRemoveBtn) {
+        resumeRemoveBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          resetResumeDropzone();
+        });
+      }
+    }
+
     function closeModal() {
       if (modal) {
         modal.style.display = 'none';
@@ -244,11 +329,20 @@
         return;
       }
 
-      // Exact confirmation letter as requested by user
+      const selectedFile = (resumeInput && resumeInput.files && resumeInput.files[0]) ? resumeInput.files[0] : null;
+      if (!selectedFile) {
+        showFeedback('Please upload your Resume / CV (PDF, DOC, or DOCX).', 'error');
+        if (resumeInput) resumeInput.focus();
+        return;
+      }
+
+      const resumeName = selectedFile.name;
+
+      // Confirmation letter
       const confirmationLetter =
 `Dear ${name}
 
-Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume in response to the job opportunity ${role}.
+Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume (${resumeName}) in response to the job opportunity ${role}.
 
 We will review your resume, and if your skills and qualifications match the position requirements, a member of our recruiting team will contact you directly.
 
@@ -264,7 +358,7 @@ CAPTIV`;
         <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;">
           <circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/>
         </svg>
-        Transmitting Profile to hr@captivtech.com...
+        Transmitting Application...
       `;
 
       const payload = {
@@ -272,6 +366,7 @@ CAPTIV`;
         email,
         phone,
         role,
+        resume: resumeName,
         link,
         message,
         timestamp: new Date().toISOString()
@@ -299,11 +394,11 @@ CAPTIV`;
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
-        Application Transmitted to hr@captivtech.com
+        Application Submitted Successfully
       `;
       submitBtn.style.background = 'var(--green)';
 
-      showFeedback(`Thank you ${name}. Your application for "${role}" has been delivered to hr@captivtech.com. A confirmation receipt has been generated.`, 'success');
+      showFeedback(`Thank you ${name}. Your application and resume for "${role}" have been submitted successfully. A confirmation receipt has been generated.`, 'success');
 
       // Populate & open Receipt Modal
       if (modal && letterContent) {
@@ -311,7 +406,7 @@ CAPTIV`;
 
         if (mailtoBtn) {
           const mailSubject = encodeURIComponent(`Application: ${role} - ${name}`);
-          const mailBody = encodeURIComponent(`Dear CAPTIV Recruitment Team,\n\nPlease find my application details below:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPosition: ${role}\nProfile/Portfolio: ${link}\n\nCandidate Notes:\n${message}\n\nSincerely,\n${name}`);
+          const mailBody = encodeURIComponent(`Dear CAPTIV Recruitment Team,\n\nPlease find my application details below:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPosition: ${role}\nAttached Resume: ${resumeName}\nProfile/Portfolio: ${link}\n\nCandidate Notes:\n${message}\n\nSincerely,\n${name}`);
           mailtoBtn.href = `mailto:hr@captivtech.com?subject=${mailSubject}&body=${mailBody}`;
         }
 
@@ -321,6 +416,7 @@ CAPTIV`;
       }
 
       careerForm.reset();
+      resetResumeDropzone();
 
       setTimeout(() => {
         submitBtn.innerHTML = origBtnText;
