@@ -155,7 +155,7 @@ In your Cloudflare Pages project settings, you can define:
 **CAPTIV Techno Solutions Pvt. Ltd.**  
 *Excellence. Delivered.*
 
-- **HQ India**: 4th Floor, Tower C, TEK MEADOWS, 51 Rajiv Gandhi Salai, Sholinganallur, Chennai, Tamil Nadu 600119  
+- **HQ India**: 4th Floor, Tower C TEK MEADOWS, 51, Rajiv Gandhi Salai, Sholinganallur, Chennai, Tamil Nadu 600119  
 - **Phone**: 044 – 4776 0166  
 - **Email**: info@captivtech.com  
 - **Regional Hubs**: Dubai (UAE) &middot; Singapore  
