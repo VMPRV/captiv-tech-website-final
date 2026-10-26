@@ -2103,6 +2103,43 @@ textarea.form-input {
   max-width: 340px;
 }
 
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-social-link:hover {
+  background: var(--blue);
+  color: #FFFFFF;
+  border-color: var(--blue);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 56, 144, 0.15);
+}
+
+.footer-social-link svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
 .footer-col h3.footer-heading,
 .footer-col h4 {
   font-size: 0.82rem;
