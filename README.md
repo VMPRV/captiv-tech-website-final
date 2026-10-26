@@ -63,7 +63,7 @@ captivtechwebsite/
 │   │   ├── ipa.png
 │   │   ├── oman-mtcit.png
 │   │   └── royal-enfield.png
-│   ├── partners/                    # 10 official technology partner logos
+│   ├── partners/                    # 12 official technology partner logos
 │   │   ├── aws.png
 │   │   ├── azure.png
 │   │   ├── google-cloud.png
@@ -73,7 +73,9 @@ captivtechwebsite/
 │   │   ├── redington.png
 │   │   ├── zoho.png
 │   │   ├── netapp.png
-│   │   └── cloudanix.png
+│   │   ├── cloudanix.png
+│   │   ├── ingram.png
+│   │   └── techdata.png
 │   ├── flags/                       # SVG national flags (HQ India, UAE, Singapore)
 │   │   ├── india.svg
 │   │   ├── uae.svg
