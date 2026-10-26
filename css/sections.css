@@ -1729,65 +1729,75 @@ textarea.form-input {
 
 /* ==========================================================================
    SECTION 15: FOOTER
+   Clean, Balanced Multi-Column Grid & Flush Bottom Bar Alignment
    ========================================================================== */
 .site-footer {
   background-color: #FFFFFF;
   border-top: 1px solid var(--border);
-  padding: 80px 0 32px 0;
+  padding: 72px 0 32px 0;
   color: var(--ink);
 }
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  gap: 48px;
-  margin-bottom: 64px;
+  grid-template-columns: 2.2fr 1.3fr 1fr 1fr 1.5fr;
+  gap: clamp(28px, 3.5vw, 48px);
+  align-items: start;
+  margin-bottom: 56px;
 }
 
 .footer-brand-col {
-  padding-right: 24px;
+  padding-right: 0;
 }
 
 .footer-logo-img {
-  height: 44px;
+  height: 38px;
   width: auto;
   object-fit: contain;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  display: block;
 }
 
 .footer-tagline {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--blue);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  line-height: 1.3;
 }
 
 .footer-desc {
   font-size: 0.88rem;
   color: var(--ink-muted);
-  line-height: 1.6;
+  line-height: 1.65;
+  max-width: 340px;
 }
 
 .footer-col h4 {
-  font-size: 0.92rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink);
   margin-bottom: 20px;
+  line-height: 1.2;
 }
 
 .footer-col ul {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-col a {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--ink-secondary);
   transition: color var(--transition-fast), transform var(--transition-fast);
   display: inline-block;
+  line-height: 1.4;
 }
 
 .footer-col a:hover {
@@ -1797,24 +1807,34 @@ textarea.form-input {
 
 .footer-contact-block {
   font-size: 0.88rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-secondary);
 }
 
 .footer-contact-block address {
   font-style: normal;
   margin-bottom: 14px;
+  color: var(--ink-secondary);
+  font-size: 0.88rem;
+  line-height: 1.65;
 }
 
 .footer-contact-block a {
   display: block;
   color: var(--blue);
   font-weight: 600;
+  font-size: 0.88rem;
   margin-top: 6px;
+  transition: color var(--transition-fast);
+}
+
+.footer-contact-block a:hover {
+  color: var(--blue-deep);
+  text-decoration: underline;
 }
 
 .footer-bottom {
-  padding-top: 32px;
+  padding-top: 28px;
   border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -1825,19 +1845,32 @@ textarea.form-input {
   color: var(--ink-muted);
 }
 
-.footer-legal-links {
+.footer-bottom-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--ink-muted);
 }
 
-.footer-legal-links a:hover {
+.footer-bottom-left a {
+  color: var(--ink-secondary);
+  transition: color var(--transition-fast);
+}
+
+.footer-bottom-left a:hover {
   color: var(--blue);
+}
+
+.footer-separator {
+  color: var(--border-hover);
+  user-select: none;
 }
 
 .footer-flags {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
 }
 
@@ -2287,7 +2320,7 @@ textarea.form-input {
     padding-right: 0;
   }
   .footer-logo-img {
-    height: 38px;
+    height: 36px;
   }
   .footer-tagline {
     font-size: 0.9rem;
@@ -2296,7 +2329,7 @@ textarea.form-input {
     font-size: 0.84rem;
   }
   .footer-col h4 {
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     margin-bottom: 12px;
   }
   .footer-col ul {
@@ -2311,13 +2344,17 @@ textarea.form-input {
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: 16px;
     padding-top: 20px;
     font-size: 0.78rem;
   }
-  .footer-legal-links {
-    flex-wrap: wrap;
-    gap: 10px;
+  .footer-bottom-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .footer-bottom-left .footer-separator {
+    display: none;
   }
   .footer-flags {
     flex-wrap: wrap;
