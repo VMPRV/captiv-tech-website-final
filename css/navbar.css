@@ -130,13 +130,15 @@
 }
 
 .nav-link.active {
-  color: var(--blue);
-  font-weight: 600;
+  color: var(--blue) !important;
+  font-weight: 700;
+  background: transparent !important;
 }
 
 /* Active Nav Glow */
 .nav-item.active .nav-link {
-  box-shadow: 0 4px 14px rgba(0, 25, 160, 0.12);
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* ==========================================================================
@@ -371,8 +373,19 @@
 }
 
 .nav-btn-contact {
-  padding: 10px 22px;
+  padding: 9px 20px;
   font-size: 0.92rem;
+  background: transparent !important;
+  border: 1.5px solid var(--blue) !important;
+  color: var(--blue) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.nav-btn-contact:hover {
+  background: var(--blue) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
 }
 
 /* Hamburger Button */

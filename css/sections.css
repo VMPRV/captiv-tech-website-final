@@ -45,7 +45,7 @@
   line-height: 1.14;
   letter-spacing: -0.035em;
   color: var(--ink);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .hero-subtext {
@@ -357,12 +357,17 @@
 }
 
 .perf-tag-status {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  text-align: center;
 }
 
 .perf-tag-status.deployed {
@@ -428,14 +433,15 @@
 }
 
 .perf-bridge-label {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   color: var(--ink-muted);
-  margin: 12px 0;
+  text-align: center;
+  white-space: nowrap;
+  margin: 10px 0;
   user-select: none;
 }
 
@@ -479,7 +485,7 @@
 }
 
 .telemetry-tag {
-  font-size: 0.7rem;
+  font-size: 0.8125rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -544,9 +550,9 @@
 
 .resolution-badge {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--blue);
   margin-bottom: 6px;
@@ -961,18 +967,24 @@
 }
 
 .project-header {
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
-  min-height: 48px;
+  margin-bottom: 18px;
 }
 
 .project-client-logo {
-  height: 38px;
-  max-width: 140px;
+  max-height: 28px;
+  max-width: 115px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   object-position: left center;
+}
+
+.project-client-logo[alt="Ford"] {
+  max-height: 22px;
 }
 
 .project-tag {
@@ -988,6 +1000,9 @@
 
 .project-card h3 {
   font-size: 1.2rem;
+  min-height: 3.2rem;
+  display: flex;
+  align-items: flex-start;
   margin-bottom: 6px;
   color: var(--ink);
 }
@@ -997,6 +1012,30 @@
   color: var(--blue);
   font-weight: 600;
   margin-bottom: 12px;
+  display: block;
+}
+
+.project-footer {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.project-cta:hover {
+  color: var(--blue-deep);
+  transform: translateX(3px);
+}
   display: block;
 }
 
@@ -1566,6 +1605,23 @@
   color: var(--ink-muted);
 }
 
+.insight-briefing-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.insight-briefing-link:hover {
+  color: var(--blue-deep);
+  transform: translateX(4px);
+}
+
 /* ==========================================================================
    SECTION 13: CAREERS BANNER
    ========================================================================== */
@@ -1707,25 +1763,30 @@
 .chip-btn {
   padding: 8px 16px;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-sm);
   color: #E2E8F0;
   font-size: 0.86rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: var(--transition-fast);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .chip-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
 }
 
+.chip-btn[aria-pressed="true"],
 .chip-btn.active {
-  background: var(--brand-gradient);
-  border-color: transparent;
-  color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(8, 137, 26, 0.35);
+  background: var(--blue) !important;
+  border-color: var(--blue) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2), 0 4px 14px rgba(0, 25, 160, 0.35);
 }
 
 /* Form Styles */
@@ -1751,10 +1812,10 @@
 
 .form-group label {
   display: block;
-  font-size: 0.84rem;
-  font-weight: 500;
+  font-size: 0.86rem;
+  font-weight: 600;
   color: #CBD5E1;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .form-input {
@@ -1805,6 +1866,18 @@ textarea.form-input {
   color: #FB7185;
 }
 
+#contactForm button[type="submit"] {
+  background: linear-gradient(180deg, #001FA8 0%, #001375 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(0, 25, 160, 0.25) !important;
+}
+
+#contactForm button[type="submit"]:hover {
+  background: linear-gradient(180deg, #0025C5 0%, #00178A 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 25, 160, 0.35) !important;
+}
+
 /* ==========================================================================
    SECTION 15: FOOTER
    Clean, Balanced Multi-Column Grid & Flush Bottom Bar Alignment
@@ -1851,6 +1924,7 @@ textarea.form-input {
   max-width: 340px;
 }
 
+.footer-col h3.footer-heading,
 .footer-col h4 {
   font-size: 0.82rem;
   font-weight: 700;

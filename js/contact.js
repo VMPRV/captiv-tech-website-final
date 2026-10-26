@@ -18,9 +18,10 @@
   chipBtns.forEach((btn) => {
     btn.addEventListener('click', function () {
       const value = this.getAttribute('data-value');
-      this.classList.toggle('active');
+      const isActive = this.classList.toggle('active');
+      this.setAttribute('aria-pressed', isActive ? 'true' : 'false');
 
-      if (this.classList.contains('active')) {
+      if (isActive) {
         if (!selectedInterests.includes(value)) {
           selectedInterests.push(value);
         }
