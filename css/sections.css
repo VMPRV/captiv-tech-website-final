@@ -1887,19 +1887,34 @@ textarea.form-input {
   border: 1px solid #E2E8F0 !important;
 }
 
+#careerForm .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+#careerForm .form-group {
+  margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 #careerForm .form-group label {
   color: #0F172A !important;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: var(--font-sm);
   margin-bottom: 8px;
   display: block;
 }
 
 #careerForm .form-input {
+  width: 100%;
+  box-sizing: border-box;
   background: #FFFFFF !important;
   border: 1.5px solid #CBD5E1 !important;
   color: #0F172A !important;
-  font-size: 0.9375rem;
+  font-size: var(--font-sm);
 }
 
 #careerForm .form-input:focus {
@@ -1928,6 +1943,9 @@ textarea.form-input {
 /* Resume Upload Drag & Drop Zone */
 .resume-dropzone {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
   border: 2px dashed #CBD5E1;
   border-radius: var(--radius-md);
   background: #F8FAFC;
@@ -1985,7 +2003,7 @@ textarea.form-input {
 }
 
 .resume-prompt {
-  font-size: 0.9375rem;
+  font-size: var(--font-sm);
   color: #1E293B;
 }
 
@@ -1995,7 +2013,7 @@ textarea.form-input {
 }
 
 .resume-formats {
-  font-size: 0.8125rem;
+  font-size: var(--font-xs);
   color: #64748B;
 }
 
@@ -2003,6 +2021,8 @@ textarea.form-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
   background: #FFFFFF;
   border: 1px solid rgba(0, 56, 144, 0.25);
   border-radius: var(--radius-sm);
@@ -2027,7 +2047,7 @@ textarea.form-input {
 
 .resume-file-name {
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: var(--font-sm);
   color: #0F172A;
   max-width: 380px;
   overflow: hidden;
@@ -2036,7 +2056,7 @@ textarea.form-input {
 }
 
 .resume-file-size {
-  font-size: 0.775rem;
+  font-size: var(--font-xs);
   color: #64748B;
 }
 
@@ -2070,8 +2090,8 @@ textarea.form-input {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.8fr 1.15fr 0.85fr 0.85fr 2.15fr;
-  gap: clamp(20px, 2.5vw, 36px);
+  grid-template-columns: 1.6fr 1fr 1fr 1fr 1.6fr;
+  gap: clamp(24px, 3vw, 40px);
   align-items: start;
   margin-bottom: 56px;
 }
@@ -2152,45 +2172,50 @@ textarea.form-input {
 }
 
 .footer-contact-block a {
-  display: block;
-  color: var(--blue);
-  font-weight: 600;
-  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-secondary);
+  font-weight: 500;
+  font-size: var(--font-sm);
   margin-top: 6px;
   transition: color var(--transition-fast);
 }
 
 .footer-contact-block a:hover {
-  color: var(--blue-deep);
+  color: var(--blue);
   text-decoration: underline;
 }
 
 .footer-bottom {
   padding-top: 28px;
   border-top: 1px solid var(--border);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.6fr 1.8fr 1.6fr;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   gap: 20px;
-  font-size: 0.85rem;
+  font-size: var(--font-xs);
   color: var(--ink-muted);
 }
 
 .footer-bottom-left {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
   color: var(--ink-muted);
 }
 
-.footer-bottom-left a {
+.footer-legal-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-legal-links a {
   color: var(--ink-secondary);
   transition: color var(--transition-fast);
 }
 
-.footer-bottom-left a:hover {
+.footer-legal-links a:hover {
   color: var(--blue);
 }
 
@@ -2202,6 +2227,7 @@ textarea.form-input {
 .footer-flags {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 14px;
 }
@@ -2212,6 +2238,12 @@ textarea.form-input {
   gap: 6px;
   font-weight: 500;
   color: var(--ink-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.flag-badge:hover {
+  color: var(--blue);
 }
 
 .flag-badge img {
