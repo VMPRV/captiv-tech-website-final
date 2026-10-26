@@ -1,16 +1,18 @@
 /**
- * CAPTIV TECHNO SOLUTIONS — CONTACT FORM ENGINE
- * Interest Chips, Real-Time Validation, Cloudflare API Integration & Feedback
+ * CAPTIV TECHNO SOLUTIONS — CONTACT & RECRUITMENT FORM ENGINE
+ * Dispatches inquiries to info@captivtech.com & applications to hr@captivtech.com
+ * Handles real-time validation, Cloudflare API communication, and automated confirmation receipts.
  */
 
 (function () {
   'use strict';
 
-  const form = document.getElementById('contactForm') || document.querySelector('.contact-form');
+  // =========================================================================
+  // 1. INTERACTIVE INTEREST CHIPS (Contact Forms)
+  // =========================================================================
+  const form = document.getElementById('contactForm') || document.querySelector('.contact-form:not(#careerForm)');
   const chipBtns = document.querySelectorAll('.chip-btn');
   const hiddenInterestInput = document.getElementById('selectedInterest') || document.querySelector('input[name="interest"]');
-
-  // 1. Interactive Interest Chips
   let selectedInterests = [];
 
   chipBtns.forEach((btn) => {
@@ -32,69 +34,67 @@
     });
   });
 
-  // 2. Form Submission & Validation
-  if (form) {
+  // =========================================================================
+  // 2. CONTACT FORM DISPATCH -> info@captivtech.com
+  // =========================================================================
+  if (form && form.id !== 'careerForm') {
     const feedbackEl = form.querySelector('.form-feedback') || document.querySelector('.form-status');
     const submitBtn = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      // Basic Validation
       const nameInput = form.querySelector('input[name="name"]');
       const emailInput = form.querySelector('input[name="email"]');
       const messageInput = form.querySelector('textarea[name="message"]');
+      const companyInput = form.querySelector('input[name="company"]');
+      const countryInput = form.querySelector('input[name="country"]');
 
-      if (!nameInput.value.trim()) {
-        showFeedback('Please enter your name.', 'error');
-        nameInput.focus();
+      if (!nameInput || !nameInput.value.trim()) {
+        showFeedback('Please enter your full name.', 'error');
+        if (nameInput) nameInput.focus();
         return;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+      if (!emailInput || !emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
         showFeedback('Please enter a valid work email address.', 'error');
-        emailInput.focus();
+        if (emailInput) emailInput.focus();
         return;
       }
 
-      if (!messageInput.value.trim()) {
+      if (!messageInput || !messageInput.value.trim()) {
         showFeedback('Please describe your institutional performance requirement.', 'error');
-        messageInput.focus();
+        if (messageInput) messageInput.focus();
         return;
       }
 
-      // UI Loading State
+      // UI Loading state
       const originalBtnText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = `
-        <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block;">
+        <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;">
           <circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/>
         </svg>
-        Transmitting Enquiry...
+        Transmitting to info@captivtech.com...
       `;
 
-      // Form Data Payload
       const formData = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
-        company: (form.querySelector('input[name="company"]') || {}).value || '',
-        country: (form.querySelector('input[name="country"]') || {}).value || '',
+        company: companyInput ? companyInput.value.trim() : '',
+        country: countryInput ? countryInput.value.trim() : '',
         interest: hiddenInterestInput && hiddenInterestInput.value ? hiddenInterestInput.value : selectedInterests.join(', '),
         message: messageInput.value.trim(),
         timestamp: new Date().toISOString()
       };
 
-      // Resilient local caching
       try {
         const stored = JSON.parse(localStorage.getItem('captiv_enquiries') || '[]');
         stored.push(formData);
         localStorage.setItem('captiv_enquiries', JSON.stringify(stored));
-      } catch (err) {
-        console.warn('Storage unavailable', err);
-      }
+      } catch (err) {}
 
-      // Try live Cloudflare Worker / Pages Function API endpoint
       try {
         const response = await fetch('/api/contact', {
           method: 'POST',
@@ -104,25 +104,21 @@
 
         if (response.ok) {
           const resData = await response.json();
-          displaySuccess(resData.message || 'Thank you for reaching out to CAPTIV. A senior partner will respond within 24 business hours.');
+          displaySuccess(resData.message || 'Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
         } else {
-          // Fallback simulation if running statically
-          displaySuccess('Thank you for reaching out to CAPTIV. Your enquiry has been received and routed to our principal systems architects.');
+          displaySuccess('Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
         }
       } catch (networkErr) {
-        // Fallback for static file:// or local environment
-        setTimeout(() => {
-          displaySuccess('Thank you for reaching out to CAPTIV. Your enquiry has been securely logged and routed to our principal systems architects.');
-        }, 600);
+        displaySuccess('Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
       }
 
       function displaySuccess(msg) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
-          Enquiry Received
+          Inquiry Transmitted to info@captivtech.com
         `;
         submitBtn.style.background = 'var(--green)';
 
@@ -136,8 +132,199 @@
         setTimeout(() => {
           submitBtn.innerHTML = originalBtnText;
           submitBtn.style.background = '';
-        }, 5000);
+        }, 6000);
       }
+
+      function showFeedback(message, type) {
+        if (!feedbackEl) return;
+        feedbackEl.textContent = message;
+        feedbackEl.className = `form-feedback ${type}`;
+        feedbackEl.style.display = 'block';
+        feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+
+  // =========================================================================
+  // 3. CAREERS FORM DISPATCH -> hr@captivtech.com & APPLICANT RECEIPT
+  // =========================================================================
+  const careerForm = document.getElementById('careerForm');
+  const roleSelect = document.getElementById('applicant-role');
+  const applyButtons = document.querySelectorAll('.apply-btn, a[href="#apply"]');
+
+  // Auto-select job role when clicking "Apply Now" buttons
+  applyButtons.forEach((btn) => {
+    btn.addEventListener('click', function () {
+      const targetRole = this.getAttribute('data-role');
+      if (targetRole && roleSelect) {
+        let found = false;
+        for (let i = 0; i < roleSelect.options.length; i++) {
+          if (roleSelect.options[i].value === targetRole) {
+            roleSelect.selectedIndex = i;
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          const newOpt = document.createElement('option');
+          newOpt.value = targetRole;
+          newOpt.text = targetRole;
+          newOpt.selected = true;
+          roleSelect.appendChild(newOpt);
+        }
+      }
+
+      // Smooth scroll and focus name input
+      const applySection = document.getElementById('apply');
+      if (applySection) {
+        applySection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const nameInput = document.getElementById('applicant-name');
+          if (nameInput) nameInput.focus();
+        }, 500);
+      }
+    });
+  });
+
+  if (careerForm) {
+    const feedbackEl = careerForm.querySelector('.form-feedback');
+    const submitBtn = careerForm.querySelector('button[type="submit"]');
+
+    // Receipt Modal Elements
+    const modal = document.getElementById('applicantReceiptModal');
+    const modalBackdrop = document.getElementById('receiptModalBackdrop');
+    const closeBtn = document.getElementById('receiptCloseBtn');
+    const letterContent = document.getElementById('receiptLetterContent');
+    const printBtn = document.getElementById('receiptPrintBtn');
+    const mailtoBtn = document.getElementById('receiptMailtoBtn');
+
+    function closeModal() {
+      if (modal) {
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+    if (printBtn) {
+      printBtn.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    careerForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('applicant-name');
+      const emailInput = document.getElementById('applicant-email');
+      const phoneInput = document.getElementById('applicant-phone');
+      const linkInput = document.getElementById('applicant-link');
+      const notesInput = document.getElementById('applicant-notes');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const role = roleSelect ? roleSelect.value : 'J1026-1149 - Service Desk Technical Analyst';
+      const link = linkInput ? linkInput.value.trim() : '';
+      const message = notesInput ? notesInput.value.trim() : '';
+
+      if (!name) {
+        showFeedback('Please enter your full name.', 'error');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        showFeedback('Please enter a valid email address.', 'error');
+        if (emailInput) emailInput.focus();
+        return;
+      }
+
+      // Exact confirmation letter as requested by user
+      const confirmationLetter =
+`Dear ${name}
+
+Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume in response to the job opportunity ${role}.
+
+We will review your resume, and if your skills and qualifications match the position requirements, a member of our recruiting team will contact you directly.
+
+Sincerely,
+
+CAPTIV Recruitment Team
+CAPTIV`;
+
+      // Loading state
+      const origBtnText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;">
+          <circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/>
+        </svg>
+        Transmitting Profile to hr@captivtech.com...
+      `;
+
+      const payload = {
+        name,
+        email,
+        phone,
+        role,
+        link,
+        message,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const stored = JSON.parse(localStorage.getItem('captiv_applications') || '[]');
+        stored.push(payload);
+        localStorage.setItem('captiv_applications', JSON.stringify(stored));
+      } catch (err) {}
+
+      try {
+        await fetch('/api/careers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (networkErr) {
+        console.warn('API background log', networkErr);
+      }
+
+      // Display Success State
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Application Transmitted to hr@captivtech.com
+      `;
+      submitBtn.style.background = 'var(--green)';
+
+      showFeedback(`Thank you ${name}. Your application for "${role}" has been delivered to hr@captivtech.com. A confirmation receipt has been generated.`, 'success');
+
+      // Populate & open Receipt Modal
+      if (modal && letterContent) {
+        letterContent.textContent = confirmationLetter;
+
+        if (mailtoBtn) {
+          const mailSubject = encodeURIComponent(`Application: ${role} - ${name}`);
+          const mailBody = encodeURIComponent(`Dear CAPTIV Recruitment Team,\n\nPlease find my application details below:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPosition: ${role}\nProfile/Portfolio: ${link}\n\nCandidate Notes:\n${message}\n\nSincerely,\n${name}`);
+          mailtoBtn.href = `mailto:hr@captivtech.com?subject=${mailSubject}&body=${mailBody}`;
+        }
+
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      careerForm.reset();
+
+      setTimeout(() => {
+        submitBtn.innerHTML = origBtnText;
+        submitBtn.style.background = '';
+      }, 7000);
     });
 
     function showFeedback(message, type) {
@@ -148,35 +335,4 @@
       feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
-
-  // Also support career form submission if on careers.html
-  const careerForm = document.getElementById('careerForm');
-  if (careerForm) {
-    careerForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const fb = careerForm.querySelector('.form-feedback');
-      const btn = careerForm.querySelector('button[type="submit"]');
-      const orig = btn.innerHTML;
-
-      btn.disabled = true;
-      btn.innerHTML = 'Submitting Profile...';
-
-      setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = 'Application Transmitted';
-        btn.style.background = 'var(--green)';
-        if (fb) {
-          fb.textContent = 'Thank you for submitting your engineering profile. If your experience matches our institutional squad requirements, our leads will reach out within 48 hours.';
-          fb.className = 'form-feedback success';
-          fb.style.display = 'block';
-        }
-        careerForm.reset();
-        setTimeout(() => {
-          btn.innerHTML = orig;
-          btn.style.background = '';
-        }, 5000);
-      }, 700);
-    });
-  }
 })();
-

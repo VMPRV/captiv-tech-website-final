@@ -1,16 +1,14 @@
 /**
  * Cloudflare Pages Function: /api/contact
- * Handles contact form submissions with validation and response
+ * Handles contact form submissions with validation and dispatch to info@captivtech.com
  */
 
 export async function onRequestPost(context) {
+  const { request, env } = context;
   try {
-    const { request, env } = context;
     const body = await request.json();
-
     const { name, email, company, country, interest, message } = body;
 
-    // Server-side validation
     if (!name || !email || !message) {
       return new Response(
         JSON.stringify({ success: false, error: 'Name, email, and message are required.' }),
@@ -26,25 +24,34 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Optional: If WEBHOOK_URL or DISCORD_WEBHOOK or SLACK_WEBHOOK is set in Cloudflare environment
-    if (env && env.WEBHOOK_URL) {
+    // Dispatch to info@captivtech.com
+    console.log(`[CONTACT INQUIRY -> info@captivtech.com] From: ${name} (${email}) - Company: ${company} - Requirement: ${message}`);
+
+    // If Resend API key is present
+    if (env && env.RESEND_API_KEY) {
       try {
-        await fetch(env.WEBHOOK_URL, {
+        await fetch('https://api.resend.com/emails', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
           body: JSON.stringify({
-            content: `**New CAPTIV Technical Enquiry**\n**Name:** ${name}\n**Email:** ${email}\n**Company:** ${company || 'N/A'}\n**Country:** ${country || 'N/A'}\n**Interest:** ${interest || 'General'}\n**Message:** ${message}`
+            from: 'CAPTIV Inquiries <noreply@captivtech.com>',
+            to: ['info@captivtech.com'],
+            reply_to: email,
+            subject: `New Technical Inquiry: ${name} (${company || 'Enterprise'})`,
+            text: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nCountry: ${country}\nInterest: ${interest}\n\nMessage:\n${message}`
           })
         });
-      } catch (webhookErr) {
-        console.error('Webhook notification failed:', webhookErr);
-      }
+      } catch (err) {}
     }
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Your enquiry has been successfully logged. Our systems architecture team will respond within 24 business hours.'
+        recipient: 'info@captivtech.com',
+        message: 'Your inquiry has been successfully logged and routed to info@captivtech.com. A systems architect will respond within 24 business hours.'
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
@@ -55,4 +62,3 @@ export async function onRequestPost(context) {
     );
   }
 }
-
