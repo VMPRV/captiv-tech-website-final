@@ -1740,8 +1740,8 @@ textarea.form-input {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 2.2fr 1.3fr 1fr 1fr 1.5fr;
-  gap: clamp(28px, 3.5vw, 48px);
+  grid-template-columns: 1.8fr 1.15fr 0.85fr 0.85fr 2.15fr;
+  gap: clamp(20px, 2.5vw, 36px);
   align-items: start;
   margin-bottom: 56px;
 }
@@ -1817,6 +1817,7 @@ textarea.form-input {
   color: var(--ink-secondary);
   font-size: 0.88rem;
   line-height: 1.65;
+  white-space: nowrap;
 }
 
 .footer-contact-block a {
@@ -2340,6 +2341,9 @@ textarea.form-input {
   }
   .footer-contact-block {
     font-size: 0.84rem;
+  }
+  .footer-contact-block address {
+    white-space: normal;
   }
   .footer-bottom {
     flex-direction: column;

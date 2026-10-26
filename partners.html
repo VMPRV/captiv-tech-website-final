@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/main.css?v=3.0">
   <link rel="stylesheet" href="css/navbar.css?v=3.0">
-  <link rel="stylesheet" href="css/sections.css?v=3.6">
+  <link rel="stylesheet" href="css/sections.css?v=3.7">
   <link rel="stylesheet" href="css/pages.css?v=3.0">
   <!-- Mobile View Fail-Safe Navbar Styles (Zero Overflow Guarantee on all Mobile Viewports) -->
   <style id="mobile-nav-inline">
@@ -32,6 +32,29 @@
       .nav-actions { gap: 5px !important; }
       .nav-btn-contact { padding: 5px 9px !important; font-size: 0.74rem !important; height: 31px !important; }
       .hamburger-btn { width: 32px !important; height: 32px !important; min-width: 32px !important; }
+    }
+  </style>
+  <!-- Footer Clean Alignment & Non-Wrapping Address Format -->
+  <style id="footer-layout-fix">
+    .footer-top {
+      grid-template-columns: 1.8fr 1.15fr 0.85fr 0.85fr 2.15fr !important;
+      gap: clamp(20px, 2.5vw, 36px) !important;
+    }
+    .footer-contact-block address {
+      white-space: nowrap !important;
+    }
+    @media (max-width: 1040px) {
+      .footer-top {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 640px) {
+      .footer-top {
+        grid-template-columns: 1fr !important;
+      }
+      .footer-contact-block address {
+        white-space: normal !important;
+      }
     }
   </style>
 </head>
@@ -301,7 +324,7 @@
         </div>
         <div class="footer-col footer-contact-block">
           <h4>HQ India</h4>
-          <address>4th Floor, Tower C TEK MEADOWS,<br>51, Rajiv Gandhi Salai, Sholinganallur,<br>Chennai, Tamil Nadu 600119</address>
+          <address>4th Floor, Tower C TEK&nbsp;MEADOWS,<br>51, Rajiv Gandhi Salai, Sholinganallur,<br>Chennai, Tamil Nadu 600119</address>
           <a href="tel:04447760166">044 – 4776 0166</a>
           <a href="mailto:info@captivtech.com">info@captivtech.com</a>
         </div>
