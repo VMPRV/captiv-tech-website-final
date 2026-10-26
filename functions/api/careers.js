@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   try {
     const body = await request.json();
-    const { name, email, phone, role, resume, link, message } = body;
+    const { name, email, phone, role, resume, resumeAttachment, link, message } = body;
 
     if (!name || !email) {
       return new Response(
@@ -26,11 +26,19 @@ export async function onRequestPost(context) {
       `CAPTIV Recruitment Team\n` +
       `CAPTIV`;
 
-    console.log(`[CAREER APPLICATION -> hr@captivtech.com] Role: ${selectedRole} - Candidate: ${name} (${email}) - Resume: ${resume || 'None'}`);
+    console.log(`[CAREER APPLICATION -> hr@captivtech.com] Role: ${selectedRole} - Candidate: ${name} (${email}) - Resume: ${resume || 'Attached'}`);
 
     if (env && env.RESEND_API_KEY) {
       try {
-        // Send to HR
+        const emailAttachments = [];
+        if (resumeAttachment && resumeAttachment.base64) {
+          emailAttachments.push({
+            filename: resumeAttachment.filename || resume || 'Candidate_Resume.pdf',
+            content: resumeAttachment.base64
+          });
+        }
+
+        // Send to HR with attachments
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -42,7 +50,8 @@ export async function onRequestPost(context) {
             to: ['hr@captivtech.com'],
             reply_to: email,
             subject: `CAPTIV Job Application: ${selectedRole} - ${name}`,
-            text: `Candidate Name: ${name}\nCandidate Email: ${email}\nPhone: ${phone}\nPosition: ${selectedRole}\nResume / CV File: ${resume || 'Attached'}\nProfile: ${link}\n\nNotes:\n${message}`
+            text: `Candidate Name: ${name}\nCandidate Email: ${email}\nPhone: ${phone}\nPosition: ${selectedRole}\nResume / CV File: ${resume || 'Attached'}\nProfile: ${link}\n\nNotes:\n${message}\n\n[NOTE: Candidate resume file is attached to this email.]`,
+            attachments: emailAttachments.length > 0 ? emailAttachments : undefined
           })
         });
 

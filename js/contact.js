@@ -215,6 +215,28 @@
       return (bytes / 1048576).toFixed(1) + ' MB';
     }
 
+    function readFileAsBase64(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = reader.result;
+          const base64Data = (typeof res === 'string' && res.includes(','))
+            ? res.split(',')[1]
+            : '';
+          resolve({
+            filename: file.name,
+            type: file.type || 'application/pdf',
+            size: file.size,
+            base64: base64Data
+          });
+        };
+        reader.onerror = () => {
+          resolve(null);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     function resetResumeDropzone() {
       if (resumeInput) resumeInput.value = '';
       if (dropzoneContent) dropzoneContent.style.display = 'flex';
@@ -358,8 +380,17 @@ CAPTIV`;
         <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;">
           <circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/>
         </svg>
-        Transmitting Application...
+        Attaching Resume & Transmitting...
       `;
+
+      let resumeAttachment = null;
+      if (selectedFile) {
+        try {
+          resumeAttachment = await readFileAsBase64(selectedFile);
+        } catch (readErr) {
+          console.warn('Could not read resume file', readErr);
+        }
+      }
 
       const payload = {
         name,
@@ -367,6 +398,7 @@ CAPTIV`;
         phone,
         role,
         resume: resumeName,
+        resumeAttachment: resumeAttachment,
         link,
         message,
         timestamp: new Date().toISOString()
@@ -374,7 +406,16 @@ CAPTIV`;
 
       try {
         const stored = JSON.parse(localStorage.getItem('captiv_applications') || '[]');
-        stored.push(payload);
+        stored.push({
+          name,
+          email,
+          phone,
+          role,
+          resume: resumeName,
+          link,
+          message,
+          timestamp: payload.timestamp
+        });
         localStorage.setItem('captiv_applications', JSON.stringify(stored));
       } catch (err) {}
 

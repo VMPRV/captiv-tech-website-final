@@ -15,27 +15,36 @@ const CORS_HEADERS = {
  * Universal Email Sender Helper
  * Supports Resend, SendGrid, Brevo, MailChannels, Webhook, and Worker Log Fallback
  */
-async function dispatchEmail({ to, from, subject, text, html, replyTo, env }) {
+async function dispatchEmail({ to, from, subject, text, html, replyTo, attachments, env }) {
   const fromAddress = from || 'CAPTIV Techno Solutions <noreply@captivtech.com>';
   let sent = false;
 
   // 1. Resend API (Recommended: Resend.com)
   if (env && env.RESEND_API_KEY) {
     try {
+      const resendPayload = {
+        from: fromAddress,
+        to: Array.isArray(to) ? to : [to],
+        reply_to: replyTo,
+        subject,
+        text,
+        html: html || text.replace(/\n/g, '<br>')
+      };
+
+      if (attachments && attachments.length > 0) {
+        resendPayload.attachments = attachments.map(att => ({
+          filename: att.filename,
+          content: att.base64 || att.content
+        }));
+      }
+
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${env.RESEND_API_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          from: fromAddress,
-          to: Array.isArray(to) ? to : [to],
-          reply_to: replyTo,
-          subject,
-          text,
-          html: html || text.replace(/\n/g, '<br>')
-        })
+        body: JSON.stringify(resendPayload)
       });
       if (res.ok) sent = true;
       else console.warn('[Resend Error]', await res.text());
@@ -47,19 +56,30 @@ async function dispatchEmail({ to, from, subject, text, html, replyTo, env }) {
   // 2. SendGrid API
   if (!sent && env && env.SENDGRID_API_KEY) {
     try {
+      const sendGridPayload = {
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: 'noreply@captivtech.com', name: 'CAPTIV Techno Solutions' },
+        reply_to: replyTo ? { email: replyTo } : undefined,
+        subject,
+        content: [{ type: 'text/html', value: html || text.replace(/\n/g, '<br>') }]
+      };
+
+      if (attachments && attachments.length > 0) {
+        sendGridPayload.attachments = attachments.map(att => ({
+          content: att.base64 || att.content,
+          filename: att.filename,
+          type: att.type || 'application/pdf',
+          disposition: 'attachment'
+        }));
+      }
+
       const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${env.SENDGRID_API_KEY}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          personalizations: [{ to: [{ email: to }] }],
-          from: { email: 'noreply@captivtech.com', name: 'CAPTIV Techno Solutions' },
-          reply_to: replyTo ? { email: replyTo } : undefined,
-          subject,
-          content: [{ type: 'text/html', value: html || text.replace(/\n/g, '<br>') }]
-        })
+        body: JSON.stringify(sendGridPayload)
       });
       if (res.ok) sent = true;
     } catch (err) {
@@ -70,16 +90,27 @@ async function dispatchEmail({ to, from, subject, text, html, replyTo, env }) {
   // 3. MailChannels API (Cloudflare Workers Native outbound)
   if (!sent) {
     try {
+      const mailChannelsPayload = {
+        personalizations: [{ to: [{ email: to }] }],
+        from: { email: 'noreply@captivtech.com', name: 'CAPTIV Techno Solutions' },
+        reply_to: replyTo ? { email: replyTo } : undefined,
+        subject,
+        content: [{ type: 'text/html', value: html || text.replace(/\n/g, '<br>') }]
+      };
+
+      if (attachments && attachments.length > 0) {
+        mailChannelsPayload.attachments = attachments.map(att => ({
+          type: att.type || 'application/pdf',
+          filename: att.filename,
+          content: att.base64 || att.content,
+          disposition: 'attachment'
+        }));
+      }
+
       const res = await fetch('https://api.mailchannels.net/tx/v1/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          personalizations: [{ to: [{ email: to }] }],
-          from: { email: 'noreply@captivtech.com', name: 'CAPTIV Techno Solutions' },
-          reply_to: replyTo ? { email: replyTo } : undefined,
-          subject,
-          content: [{ type: 'text/html', value: html || text.replace(/\n/g, '<br>') }]
-        })
+        body: JSON.stringify(mailChannelsPayload)
       });
       if (res.ok) sent = true;
     } catch (err) {
@@ -196,7 +227,7 @@ export default {
     if (url.pathname === '/api/careers' && request.method === 'POST') {
       try {
         const body = await request.json();
-        const { name, email, phone, role, resume, link, message } = body;
+        const { name, email, phone, role, resume, resumeAttachment, link, message } = body;
 
         if (!name || !email) {
           return new Response(JSON.stringify({
@@ -207,6 +238,16 @@ export default {
 
         const selectedRole = role || 'J1026-1149 - Service Desk Technical Analyst';
 
+        // Prepare email attachments array
+        const emailAttachments = [];
+        if (resumeAttachment && resumeAttachment.base64) {
+          emailAttachments.push({
+            filename: resumeAttachment.filename || resume || 'Candidate_Resume.pdf',
+            type: resumeAttachment.type || 'application/pdf',
+            base64: resumeAttachment.base64
+          });
+        }
+
         // The exact confirmation text requested by the user
         const applicantConfirmationText = `Dear ${name}\n\n` +
           `Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume${resume ? ` (${resume})` : ''} in response to the job opportunity ${selectedRole}.\n\n` +
@@ -215,24 +256,26 @@ export default {
           `CAPTIV Recruitment Team\n` +
           `CAPTIV`;
 
-        // Email 1: Dispatch to hr@captivtech.com
+        // Email 1: Dispatch to hr@captivtech.com with resume attachment
         const hrSubject = `CAPTIV Job Application: ${selectedRole} - ${name}`;
         const hrBody = `CAPTIV — NEW RECRUITMENT APPLICATION\n\n` +
           `Candidate Name: ${name}\n` +
           `Candidate Email: ${email}\n` +
           `Phone Number: ${phone || 'Not Provided'}\n` +
           `Target Opportunity: ${selectedRole}\n` +
-          `Resume / CV File: ${resume || 'Attached'}\n` +
+          `Attached Resume / CV: ${resume || (resumeAttachment ? resumeAttachment.filename : 'Attached')}\n` +
           `Portfolio / GitHub / Profile: ${link || 'Not Provided'}\n\n` +
           `Engineering Problem / Candidate Notes:\n${message || 'N/A'}\n\n` +
           `Timestamp: ${new Date().toUTCString()}\n` +
-          `Routed to: hr@captivtech.com`;
+          `Routed to: hr@captivtech.com\n\n` +
+          `${emailAttachments.length > 0 ? '[NOTE: Candidate resume file is attached to this email.]' : ''}`;
 
         await dispatchEmail({
           to: 'hr@captivtech.com',
           replyTo: email,
           subject: hrSubject,
           text: hrBody,
+          attachments: emailAttachments,
           env
         });
 
