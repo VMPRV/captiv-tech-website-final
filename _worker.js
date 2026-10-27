@@ -314,24 +314,108 @@ export default {
 </html>`;
 
         // Email 1: Dispatch to hr@captivtech.com with resume attachment
-        const hrSubject = `CAPTIV Job Application: ${selectedRole} - ${name}`;
-        const hrBody = `CAPTIV — NEW RECRUITMENT APPLICATION\n\n` +
-          `Candidate Name: ${name}\n` +
-          `Candidate Email: ${email}\n` +
-          `Phone Number: ${phone || 'Not Provided'}\n` +
-          `Target Opportunity: ${selectedRole}\n` +
-          `Attached Resume / CV: ${resume || (resumeAttachment ? resumeAttachment.filename : 'Attached')}\n` +
-          `Portfolio / GitHub / Profile: ${link || 'Not Provided'}\n\n` +
-          `Engineering Problem / Candidate Notes:\n${message || 'N/A'}\n\n` +
-          `Timestamp: ${new Date().toUTCString()}\n` +
-          `Routed to: hr@captivtech.com\n\n` +
-          `${emailAttachments.length > 0 ? '[NOTE: Candidate resume file is attached to this email.]' : ''}`;
+        const hrSubject = `New Job Application: ${selectedRole} - ${name}`;
+        const resumeDisplayName = resume || (resumeAttachment ? resumeAttachment.filename : 'Resume / CV Attached');
+        const hrBody = `Dear HR Team,\n\n` +
+          `A new job application has been received through the CAPTIV Tech Careers email address.\n\n` +
+          `Candidate Details:\n` +
+          `- Candidate Name: ${name || 'Not Specified'}\n` +
+          `- Email Address: ${email}\n` +
+          `- Contact Number: ${phone || 'Not available'}\n` +
+          `- Position Applied For: ${selectedRole || 'Not specified'}\n` +
+          `- Resume: Attached (${resumeDisplayName})\n` +
+          (link ? `- Profile / Portfolio: ${link}\n` : '') +
+          (message ? `- Candidate Notes / Experience: ${message}\n` : '') +
+          `\nKindly review the candidate's profile and proceed with the recruitment process as appropriate.\n\n` +
+          `Best Regards,\n` +
+          `CAPTIV Tech Careers System\n` +
+          `CAPTIV Techno Solutions Private Limited\n` +
+          `Website: https://captivtech.com`;
+
+        const hrHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Job Application - CAPTIV Tech Careers</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; line-height: 1.6; }
+    .wrapper { width: 100%; table-layout: fixed; background-color: #f1f5f9; padding: 32px 16px; }
+    .main { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 14px rgba(0, 56, 144, 0.06); }
+    .header { padding: 28px 36px 20px 36px; border-bottom: 2px solid #003890; text-align: left; background: #ffffff; }
+    .logo { height: 32px; width: auto; display: block; }
+    .badge { display: inline-block; background: #eff6ff; color: #003890; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 4px; margin-top: 10px; border: 1px solid #bfdbfe; }
+    .content { padding: 32px 36px; font-size: 15px; color: #334155; }
+    .content p { margin: 0 0 16px 0; }
+    .details-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; font-size: 14px; }
+    .details-table td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+    .details-table tr:last-child td { border-bottom: none; }
+    .label { font-weight: 600; color: #0f172a; width: 38%; background: #f1f5f9; }
+    .val { color: #334155; }
+    .signoff { margin-top: 28px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+    .footer { padding: 20px 36px; background-color: #f8fafc; font-size: 12px; color: #64748b; text-align: center; border-top: 1px solid #e2e8f0; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div class="header">
+        <img src="https://captiv-tech-website-final.whitedevilthalapathy.workers.dev/assets/CAPTIV_NEW_BLACK.png" alt="CAPTIV Techno Solutions" class="logo" />
+        <div class="badge">Careers Recruitment Notification</div>
+      </div>
+      <div class="content">
+        <p><strong>Dear HR Team,</strong></p>
+        <p>A new job application has been received through the CAPTIV Tech Careers email address.</p>
+        
+        <p><strong>Candidate Details:</strong></p>
+        <table class="details-table">
+          <tr>
+            <td class="label">Candidate Name</td>
+            <td class="val"><strong>${name || 'Not Specified'}</strong></td>
+          </tr>
+          <tr>
+            <td class="label">Email Address</td>
+            <td class="val"><a href="mailto:${email}" style="color: #003890; text-decoration: none; font-weight: 500;">${email}</a></td>
+          </tr>
+          <tr>
+            <td class="label">Contact Number</td>
+            <td class="val">${phone || 'Not available'}</td>
+          </tr>
+          <tr>
+            <td class="label">Position Applied For</td>
+            <td class="val"><strong>${selectedRole || 'Not specified'}</strong></td>
+          </tr>
+          <tr>
+            <td class="label">Resume</td>
+            <td class="val">Attached (${resumeDisplayName})</td>
+          </tr>
+          ${link ? `<tr><td class="label">Profile / Portfolio</td><td class="val"><a href="${link}" target="_blank" style="color: #003890;">${link}</a></td></tr>` : ''}
+          ${message ? `<tr><td class="label">Notes / Experience</td><td class="val">${message.replace(/\n/g, '<br>')}</td></tr>` : ''}
+        </table>
+
+        <p>Kindly review the candidate's profile and proceed with the recruitment process as appropriate.</p>
+
+        <div class="signoff">
+          <p style="margin: 0 0 6px 0;"><strong>Best Regards,</strong></p>
+          <p style="margin: 0; color: #0f172a; font-weight: 600;">CAPTIV Tech Careers System</p>
+          <p style="margin: 0; color: #475569;">CAPTIV Techno Solutions Private Limited</p>
+          <p style="margin: 8px 0 0 0;"><a href="https://captivtech.com" style="color: #003890; text-decoration: none; font-weight: 500;">Website: https://captivtech.com</a></p>
+        </div>
+      </div>
+      <div class="footer">
+        &copy; 2026 CAPTIV Techno Solutions Private Limited &middot; Excellence Delivered
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
 
         await dispatchEmail({
           to: 'hr@captivtech.com',
           replyTo: email,
           subject: hrSubject,
           text: hrBody,
+          html: hrHtml,
           attachments: emailAttachments,
           env
         });

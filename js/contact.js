@@ -450,8 +450,24 @@ https://captivtech.com`;
         letterContent.textContent = confirmationLetter;
 
         if (mailtoBtn) {
-          const mailSubject = encodeURIComponent(`Application: ${role} - ${name}`);
-          const mailBody = encodeURIComponent(`Dear CAPTIV Recruitment Team,\n\nPlease find my application details below:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nPosition: ${role}\nAttached Resume: ${resumeName}\nProfile/Portfolio: ${link}\n\nCandidate Notes:\n${message}\n\nSincerely,\n${name}`);
+          const mailSubject = encodeURIComponent(`Job Application: ${role} - ${name}`);
+          const mailBody = encodeURIComponent(
+            `Dear HR Team,\n\n` +
+            `A new job application has been received through the CAPTIV Tech Careers email address.\n\n` +
+            `Candidate Details:\n` +
+            `- Candidate Name: ${name || 'Not Specified'}\n` +
+            `- Email Address: ${email}\n` +
+            `- Contact Number: ${phone || 'Not available'}\n` +
+            `- Position Applied For: ${role || 'Not specified'}\n` +
+            `- Resume: Attached (${resumeName})\n` +
+            (link ? `- Profile / Portfolio: ${link}\n` : '') +
+            (message ? `- Candidate Notes / Experience: ${message}\n` : '') +
+            `\nKindly review the candidate's profile and proceed with the recruitment process as appropriate.\n\n` +
+            `Best Regards,\n` +
+            `CAPTIV Tech Careers System\n` +
+            `CAPTIV Techno Solutions Private Limited\n` +
+            `Website: https://captivtech.com`
+          );
           mailtoBtn.href = `mailto:hr@captivtech.com?subject=${mailSubject}&body=${mailBody}`;
         }
 
