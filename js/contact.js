@@ -77,7 +77,7 @@
         <svg class="spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" style="animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px;">
           <circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-linecap="round"/>
         </svg>
-        Transmitting to info@captivtech.com...
+        Transmitting Inquiry...
       `;
 
       const formData = {
@@ -105,12 +105,12 @@
 
         if (response.ok) {
           const resData = await response.json();
-          displaySuccess(resData.message || 'Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
+          displaySuccess(resData.message || 'Thank you. Your inquiry has been securely received. An engineering partner will respond within 24 business hours.');
         } else {
-          displaySuccess('Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
+          displaySuccess('Thank you. Your inquiry has been securely received. An engineering partner will respond within 24 business hours.');
         }
       } catch (networkErr) {
-        displaySuccess('Thank you. Your inquiry has been routed to info@captivtech.com. An engineering partner will respond within 24 business hours.');
+        displaySuccess('Thank you. Your inquiry has been securely received. An engineering partner will respond within 24 business hours.');
       }
 
       function displaySuccess(msg) {
@@ -119,7 +119,7 @@
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
-          Inquiry Transmitted to info@captivtech.com
+          Inquiry Transmitted Successfully
         `;
         submitBtn.style.background = 'var(--green)';
 

@@ -191,10 +191,9 @@ export default {
         const clientSubject = `CAPTIV — Ingestion Confirmation: Technical Inquiry Received`;
         const clientBody = `Dear ${name},\n\n` +
           `Thank you for reaching out to CAPTIV Techno Solutions.\n\n` +
-          `We are pleased to confirm that your technical inquiry regarding ${interest || 'Institutional Systems'} has been securely received and assigned to our systems architecture team at info@captivtech.com.\n\n` +
+          `We are pleased to confirm that your technical inquiry regarding ${interest || 'Institutional Systems'} has been securely received and assigned to our systems architecture team.\n\n` +
           `Our engineering leadership will review your requirements and respond within 24 business hours with an honest, architectural perspective.\n\n` +
           `Sincerely,\n\n` +
-          `Principal Systems Architecture Team\n` +
           `CAPTIV Techno Solutions Pvt. Ltd.\n` +
           `HQ: TEK Meadows, Chennai | Dubai | Singapore\n` +
           `https://captivtech.com`;
@@ -209,8 +208,8 @@ export default {
 
         return new Response(JSON.stringify({
           success: true,
-          recipient: 'info@captivtech.com',
-          message: "Thank you for reaching out. Your inquiry has been routed to info@captivtech.com. A systems architect will connect with you within 24 business hours."
+          recipient: 'CAPTIV Systems Architecture',
+          message: "Thank you for reaching out. Your inquiry has been securely received. An engineering partner will connect with you within 24 business hours."
         }), { status: 200, headers: CORS_HEADERS });
 
       } catch (err) {

@@ -50,8 +50,8 @@ export async function onRequestPost(context) {
     return new Response(
       JSON.stringify({
         success: true,
-        recipient: 'info@captivtech.com',
-        message: 'Your inquiry has been successfully logged and routed to info@captivtech.com. A systems architect will respond within 24 business hours.'
+        recipient: 'CAPTIV Systems Architecture',
+        message: 'Your inquiry has been securely received. An engineering partner will respond within 24 business hours.'
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
