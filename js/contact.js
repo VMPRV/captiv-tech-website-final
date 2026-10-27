@@ -361,17 +361,21 @@
       const resumeName = selectedFile.name;
 
       // Confirmation letter
+      const candidateGreeting = name ? `Dear ${name},` : 'Dear Candidate,';
       const confirmationLetter =
-`Dear ${name}
+`${candidateGreeting}
 
-Thank you for your interest in a career with CAPTIV. We are pleased to confirm the receipt of your resume (${resumeName}) in response to the job opportunity ${role}.
+Thank you for reaching out to CAPTIV Techno Solutions Private Limited and expressing your interest in career opportunities with us.
 
-We will review your resume, and if your skills and qualifications match the position requirements, a member of our recruiting team will contact you directly.
+We have received your email and resume successfully. Our HR team will review your profile and contact you if your qualifications and experience match our current job openings.
 
-Sincerely,
+We appreciate your interest in being part of CAPTIV Tech and thank you for considering us for your career journey.
 
-CAPTIV Recruitment Team
-CAPTIV`;
+Best Regards,
+HR Team
+CAPTIV Techno Solutions
+Excellence Delivered
+https://captivtech.com`;
 
       // Loading state
       const origBtnText = submitBtn.innerHTML;
